@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Vector;
 
@@ -6,6 +7,11 @@ class DiskAlgos
 
 static int size = 8;
 static int disk_size = 200;
+static int[] sequence;
+
+public static int[] getSequence() {
+    return sequence;
+}
  
 static void FCFS(int arr[], int head)
 {
@@ -38,6 +44,7 @@ static void FCFS(int arr[], int head)
     {
         System.out.println(arr[i]);
     }
+    sequence = arr.clone();
 }
 
 // Calculates difference of each
@@ -113,6 +120,8 @@ static void FCFS(int arr[], int head)
         // print the sequence
         for (int i = 0; i < seek_sequence.length; i++)
             System.out.println(seek_sequence[i]);
+
+        sequence = seek_sequence.clone();
     }
 
 static void SCAN(int arr[], int head, String direction)
@@ -200,6 +209,8 @@ static void SCAN(int arr[], int head, String direction)
     {
         System.out.print(seek_sequence.get(i) + "\n");
     }
+    sequence = seek_sequence.stream().mapToInt(i->i).toArray();
+
 }
 
 public static void CSCAN(int arr[], int head)
@@ -287,6 +298,7 @@ public static void CSCAN(int arr[], int head)
         for (int i = 0; i < seek_sequence.size(); i++) {
             System.out.println(seek_sequence.get(i));
         }
+        sequence = seek_sequence.stream().mapToInt(i->i).toArray();
     }
 
     public static void LOOK(int arr[], int head,
@@ -380,6 +392,7 @@ for(int i = 0; i < seek_sequence.size(); i++)
 {
 System.out.println(seek_sequence.get(i));
 }
+sequence = seek_sequence.stream().mapToInt(i->i).toArray();
 }
 
 public static void CLOOK(int arr[], int head)
@@ -464,6 +477,7 @@ public static void CLOOK(int arr[], int head)
     {
         System.out.println(seek_sequence.get(i));
     }
+    sequence = seek_sequence.stream().mapToInt(i->i).toArray();
 }
  
 // Driver code
