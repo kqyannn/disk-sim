@@ -1,9 +1,37 @@
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.image.PixelGrabber;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
+
+import javax.swing.Action;
+import javax.swing.JFileChooser;
+
+import org.w3c.dom.events.Event;
+
 public class IOPanel extends javax.swing.JPanel {
     public IOPanel() {
         initComponents();
     }
-                        
-    private void initComponents() {
+    int selected;
+    double speed;
+    final int cylinder_line = 199;
+    final int req_caps = 40;
+    int[] main_queue;
+
+
+    public void reset(){
+        // speed = 1;
+        // selected = 0;
+        removeAll();
+        initComponents();
+    }
+
+    public void initComponents() {
+        
+        speed = 1;
         exit = new javax.swing.JButton();
         minimize = new javax.swing.JButton();
         io_save_panel = new javax.swing.JPanel();
@@ -36,7 +64,7 @@ public class IOPanel extends javax.swing.JPanel {
         io_dot_clook = new javax.swing.JLabel();
         io_algo_select_label = new javax.swing.JLabel();
         io_algo_label = new javax.swing.JLabel();
-        io_queue_bg = new javax.swing.JLabel();
+        io_speed_value = new javax.swing.JLabel();
         io_position_bg = new javax.swing.JLabel();
         io_speed_label = new javax.swing.JLabel();
         io_timer_label = new javax.swing.JLabel();
@@ -371,6 +399,52 @@ public class IOPanel extends javax.swing.JPanel {
         io_algo_select.setBackground(new java.awt.Color(197, 211, 221));
         io_algo_select.setFont(new java.awt.Font("Poppins SemiBold", 0, 11)); 
         io_algo_select.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "First Come First Serve", "Shortest Seek Time First", "Scan", "C-Scan", "Look", "C-Look" }));
+        io_algo_select.addActionListener(new java.awt.event.ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent evt){
+                io_algoSelectActionPerformed(evt);
+            }
+
+            public void io_algoSelectActionPerformed(ActionEvent evt) {
+             System.out.println(io_algo_select.getSelectedItem().toString());
+            //1. FCFS, 2. SSTF, 3. SCAN 4.C-SCAN 5. LOOK 6. C-LOOK
+            int index = io_algo_select.getSelectedIndex();
+            int x = 220;
+            int y = 20;
+            int width = 300;
+            int height = 110;
+            set_dot(index);
+            //[x=220,y=20,width=300,height=110]
+            switch(index){
+                
+                case 0:
+                    io_algo_label.setText("FCFS");
+                    io_algo_label.setBounds(x+50, y, width, height);
+                    
+                break;
+                case 1:
+                    io_algo_label.setText("SSTF");
+                    io_algo_label.setBounds(x+50, y, width, height);
+                break;
+                case 2:
+                    io_algo_label.setText("SCAN");
+                    io_algo_label.setBounds(x+50, y, width, height);
+                break;
+                case 3:
+                    io_algo_label.setText("C-SCAN");
+                    io_algo_label.setBounds(x, y, width, height);
+                break;
+                case 4:
+                    io_algo_label.setText("LOOK");
+                    io_algo_label.setBounds(x+50, y, width, height);
+                break;
+                case 5:
+                    io_algo_label.setText("C-LOOK");
+                    io_algo_label.setBounds(x, y, width, height);
+                break;
+            }
+
+            }
+        });
         io_algo_select.setBorder(null);
         io_backpanel.add(io_algo_select);
         io_algo_select.setBounds(40, 60, 170, 30);
@@ -393,9 +467,11 @@ public class IOPanel extends javax.swing.JPanel {
 
         io_dot_fcfs.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         io_dot_fcfs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png"))); 
+        
         io_dot_fcfs.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         io_backpanel.add(io_dot_fcfs);
         io_dot_fcfs.setBounds(40, 100, 20, 20);
+        set_dot(0);
 
         io_dot_sstf.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         io_dot_sstf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png"))); 
@@ -437,17 +513,17 @@ public class IOPanel extends javax.swing.JPanel {
 
         io_algo_label.setFont(new java.awt.Font("Poppins ExtraBold", 0, 66)); 
         io_algo_label.setForeground(new java.awt.Color(106, 171, 240));
-        io_algo_label.setText("C-LOOK");
+        io_algo_label.setText("FCFS");
         io_algo_label.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         io_backpanel.add(io_algo_label);
-        io_algo_label.setBounds(220, 20, 300, 110);
+        io_algo_label.setBounds(270, 20, 300, 110);
 
-        io_queue_bg.setFont(new java.awt.Font("Poppins ExtraBold", 0, 14)); 
-        io_queue_bg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        io_queue_bg.setText("1.0x");
-        io_queue_bg.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        io_backpanel.add(io_queue_bg);
-        io_queue_bg.setBounds(690, 40, 50, 40);
+        io_speed_value.setFont(new java.awt.Font("Poppins ExtraBold", 0, 14)); 
+        io_speed_value.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        io_speed_value.setText(String.valueOf(speed) + "x");
+        io_speed_value.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        io_backpanel.add(io_speed_value);
+        io_speed_value.setBounds(690, 40, 50, 40);
 
         io_position_bg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         io_position_bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/position.png"))); 
@@ -490,159 +566,305 @@ public class IOPanel extends javax.swing.JPanel {
         io_backpanel.setBounds(0, 0, 1080, 720);
     }
 
-    private void exitMouseEntered(java.awt.event.MouseEvent evt) {                                  
+    public void set_dot(int i) {
+//1. FCFS, 2. SSTF, 3. SCAN 4.C-SCAN 5. LOOK 6. C-LOOK
+        switch(i){
+            case 0:
+            io_dot_fcfs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot_selected.png")));
+            io_dot_sstf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_look.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_clook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_scan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_cscan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            break;
+
+            case 1:
+            io_dot_fcfs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_sstf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot_selected.png")));
+            io_dot_look.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_clook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_scan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_cscan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            break;
+
+            case 2:
+            io_dot_fcfs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_sstf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_look.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_clook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_scan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot_selected.png")));
+            io_dot_cscan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            break;
+
+            case 3:
+            io_dot_fcfs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_sstf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_look.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_clook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_scan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_cscan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot_selected.png")));
+            break;
+
+
+            case 4:
+            io_dot_fcfs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_sstf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_look.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_clook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_scan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot_selected.png")));
+            io_dot_cscan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            break;
+
+
+            case 5:
+            io_dot_fcfs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_sstf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_look.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_clook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_scan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot.png")));
+            io_dot_cscan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/dot_selected.png")));
+            break;
+
+
+        }
+        
+
+    }
+
+    public void exitMouseEntered(java.awt.event.MouseEvent evt) {                                  
         exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/close_hover.png")));
     }                                 
 
-    private void exitMouseExited(java.awt.event.MouseEvent evt) {                                 
+    public void exitMouseExited(java.awt.event.MouseEvent evt) {                                 
         exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/close.png")));
     }                                
 
-    private void exitActionPerformed(java.awt.event.ActionEvent evt) {          
+    public void exitActionPerformed(java.awt.event.ActionEvent evt) {          
         Music.sfx();                           
         System.exit(0);
     }                                    
 
-    private void minimizeMouseEntered(java.awt.event.MouseEvent evt) {                                      
+    public void minimizeMouseEntered(java.awt.event.MouseEvent evt) {                                      
         minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/min_hover.png")));
     }                                     
 
-    private void minimizeMouseExited(java.awt.event.MouseEvent evt) {                                     
+    public void minimizeMouseExited(java.awt.event.MouseEvent evt) {                                     
         minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/min.png")));
     }                                    
 
-    private void minimizeActionPerformed(java.awt.event.ActionEvent evt) {          
+    public void minimizeActionPerformed(java.awt.event.ActionEvent evt) {          
         Music.sfx();                               
         DiskSim.mainFrame.setState(java.awt.Frame.ICONIFIED);
     }                                        
 
-    private void io_returnMouseEntered(java.awt.event.MouseEvent evt) {                                       
+    public void io_returnMouseEntered(java.awt.event.MouseEvent evt) {                                       
         io_return.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/return_hover.png")));
     }                                      
 
-    private void io_returnMouseExited(java.awt.event.MouseEvent evt) {                                      
+    public void io_returnMouseExited(java.awt.event.MouseEvent evt) {                                      
         io_return.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/return.png")));
     }                                     
 
-    private void io_returnActionPerformed(java.awt.event.ActionEvent evt) {  
+    public void io_returnActionPerformed(java.awt.event.ActionEvent evt) {  
         Music.sfx();                                        
+        reset();
         DiskSim.card.show(DiskSim.mainPanel, "2");
     }                                         
 
-    private void io_saveMouseEntered(java.awt.event.MouseEvent evt) {                                     
+    public void io_saveMouseEntered(java.awt.event.MouseEvent evt) {                                     
         io_save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/save_hover.png")));
     }                                    
 
-    private void io_saveMouseExited(java.awt.event.MouseEvent evt) {                                    
+    public void io_saveMouseExited(java.awt.event.MouseEvent evt) {                                    
         io_save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/save.png")));
     }                                   
 
-    private void io_saveActionPerformed(java.awt.event.ActionEvent evt) {    
+    public void io_saveActionPerformed(java.awt.event.ActionEvent evt) {    
         Music.sfx();                                    
         setPanelEnabled(io_backpanel, false);
         io_save_panel.setVisible(true);
     }                                       
 
-    private void io_addMouseEntered(java.awt.event.MouseEvent evt) {                                    
+    public void io_addMouseEntered(java.awt.event.MouseEvent evt) {                                    
         io_add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/add_hover.png")));
     }                                   
 
-    private void io_addMouseExited(java.awt.event.MouseEvent evt) {                                   
+    public void io_addMouseExited(java.awt.event.MouseEvent evt) {                                   
         io_add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/add.png")));
     }                                  
 
-    private void io_addActionPerformed(java.awt.event.ActionEvent evt) {                                       
+    public void io_addActionPerformed(java.awt.event.ActionEvent evt) {                                       
         Music.sfx();
+        if(speed < 2.5){
+            speed += 0.5;
+            io_speed_value.setText(String.valueOf(speed));
+        }
+        else{
+            speed = 2.5;
+            io_speed_value.setText(String.valueOf(speed));
+        }
 
     }                                      
 
-    private void io_minusMouseEntered(java.awt.event.MouseEvent evt) {                                      
+    public void io_minusMouseEntered(java.awt.event.MouseEvent evt) {                                      
         io_minus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/minus_hover.png")));
     }                                     
 
-    private void io_minusMouseExited(java.awt.event.MouseEvent evt) {                                     
+    public void io_minusMouseExited(java.awt.event.MouseEvent evt) {                                     
         io_minus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/minus.png")));
     }                                    
 
-    private void io_minusActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    public void io_minusActionPerformed(java.awt.event.ActionEvent evt) {       
         Music.sfx();
+        Music.sfx();
+        if(speed > 0.5){
+            speed -= 0.5;
+            io_speed_value.setText(String.valueOf(speed));
+        }
+        else{
+            speed = 0.5;
+            io_speed_value.setText(String.valueOf(speed));
+        }
 
     }                                        
 
-    private void io_importMouseEntered(java.awt.event.MouseEvent evt) {                                       
+    public void io_importMouseEntered(java.awt.event.MouseEvent evt) {                                       
         io_import.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/import_hover.png")));
     }                                      
 
-    private void io_importMouseExited(java.awt.event.MouseEvent evt) {                                      
+    public void io_importMouseExited(java.awt.event.MouseEvent evt) {                                      
         io_import.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/import.png")));
     }                                     
 
-    private void io_importActionPerformed(java.awt.event.ActionEvent evt) {                                          
+    public void io_importActionPerformed(java.awt.event.ActionEvent evt) {                                          
         Music.sfx();
+        System.out.println("importing");
+
+        String queueline;
+
+
+        io_queue_input.setText("");
+
+        final JFileChooser fc = new JFileChooser();
+        fc.showOpenDialog(null);
+        File file = fc.getSelectedFile();
+        import_ArrayList = new ArrayList<Integer>();
+        try(Scanner read = new Scanner(file)) {
+
+            queueline = read.nextLine();
+
+            Scanner read2 = new Scanner(queueline);
+            read2.next();
+            while(read2.hasNext()){ 
+              if(io_queue_input.getText().equals("")){
+                io_queue_input.setText(read2.next());
+              }
+              else{
+                io_queue_input.setText(io_queue_input.getText() + " " + read2.next());
+              }
+
+            }
+
+           read.next();
+           io_position_input.setText(read.next());
+            // System.out.println(import_ArrayList);
+            
+            
+           
+            
+        } catch (Exception e) {
+            System.out.println(e);
+            // TODO: handle exception
+        }
+
 
     }                                         
 
-    private void io_randomMouseEntered(java.awt.event.MouseEvent evt) {                                       
+    public void io_randomMouseEntered(java.awt.event.MouseEvent evt) {                                       
         io_random.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/random_hover.png")));
     }                                      
 
-    private void io_randomMouseExited(java.awt.event.MouseEvent evt) {                                      
+    public void io_randomMouseExited(java.awt.event.MouseEvent evt) {                                      
         io_random.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/random.png")));
     }                                     
-
-    private void io_randomActionPerformed(java.awt.event.ActionEvent evt) {                                          
+    
+    public void io_randomActionPerformed(java.awt.event.ActionEvent evt) {                                          
         Music.sfx();
+        
+        int[] random_array;
+
+        Random rand = new Random();
+        
+        int len = rand.nextInt(10) + 3;
+        System.out.println(len);
+        
+        random_array = new int[len];
+        io_queue_input.setText("");
+
+        for(int i = 0; i < len; i++){
+            random_array[i] = rand.nextInt(199);
+
+            if(io_queue_input.getText().equals("")){
+                io_queue_input.setText(String.valueOf(random_array[i]));
+            }
+            else{
+                io_queue_input.setText(io_queue_input.getText() + " " + String.valueOf(random_array[i]));
+            }
+            
+        }
+
+        io_position_input.setText(String.valueOf(random_array[rand.nextInt(random_array.length)]));
 
     }                                         
 
-    private void io_startMouseEntered(java.awt.event.MouseEvent evt) {                                      
+    public void io_startMouseEntered(java.awt.event.MouseEvent evt) {                                      
         io_start.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/start_hover.png")));
     }                                     
 
-    private void io_startMouseExited(java.awt.event.MouseEvent evt) {                                     
+    public void io_startMouseExited(java.awt.event.MouseEvent evt) {                                     
         io_start.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/start.png")));
     }                                    
 
-    private void io_startActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    public void io_startActionPerformed(java.awt.event.ActionEvent evt) {                                         
         Music.sfx();
 
     }                                        
 
-    private void io_save_pngMouseEntered(java.awt.event.MouseEvent evt) {                                         
+    public void io_save_pngMouseEntered(java.awt.event.MouseEvent evt) {                                         
         io_save_png.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/png_hover.png")));
     }                                        
 
-    private void io_save_pngMouseExited(java.awt.event.MouseEvent evt) {                                        
+    public void io_save_pngMouseExited(java.awt.event.MouseEvent evt) {                                        
         io_save_png.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/png.png")));
     }                                       
 
-    private void io_save_pngActionPerformed(java.awt.event.ActionEvent evt) {                                            
+    public void io_save_pngActionPerformed(java.awt.event.ActionEvent evt) {                                            
         Music.sfx();
 
     }                                           
 
-    private void io_save_pdfMouseEntered(java.awt.event.MouseEvent evt) {                                         
+    public void io_save_pdfMouseEntered(java.awt.event.MouseEvent evt) {                                         
         io_save_pdf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/pdf_hover.png")));
     }                                        
 
-    private void io_save_pdfMouseExited(java.awt.event.MouseEvent evt) {                                        
+    public void io_save_pdfMouseExited(java.awt.event.MouseEvent evt) {                                        
         io_save_pdf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/pdf.png")));
     }                                       
 
-    private void io_save_pdfActionPerformed(java.awt.event.ActionEvent evt) {                                            
+    public void io_save_pdfActionPerformed(java.awt.event.ActionEvent evt) {                                            
         Music.sfx();
 
     }                                           
 
-    private void io_return_panelMouseEntered(java.awt.event.MouseEvent evt) {                                             
+    public void io_return_panelMouseEntered(java.awt.event.MouseEvent evt) {                                             
         io_return_panel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/return_hover.png")));
     }                                            
 
-    private void io_return_panelMouseExited(java.awt.event.MouseEvent evt) {                                            
+    public void io_return_panelMouseExited(java.awt.event.MouseEvent evt) {                                            
         io_return_panel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/return.png")));
     }                                           
 
-    private void io_return_panelActionPerformed(java.awt.event.ActionEvent evt) {     
+    public void io_return_panelActionPerformed(java.awt.event.ActionEvent evt) {     
         Music.sfx();                                           
         setPanelEnabled(io_backpanel, true);
         io_save_panel.setVisible(false);
@@ -659,43 +881,44 @@ public class IOPanel extends javax.swing.JPanel {
         }
     }
                  
-    private javax.swing.JButton exit;
-    private javax.swing.JButton io_add;
-    private javax.swing.JLabel io_algo_label;
-    private javax.swing.JComboBox<String> io_algo_select;
-    private javax.swing.JLabel io_algo_select_label;
-    private javax.swing.JPanel io_backpanel;
-    private javax.swing.JLabel io_bg;
-    private javax.swing.JLabel io_directory_bg;
-    private javax.swing.JTextField io_directory_input;
-    private javax.swing.JLabel io_directory_label;
-    private javax.swing.JLabel io_dot_clook;
-    private javax.swing.JLabel io_dot_cscan;
-    private javax.swing.JLabel io_dot_fcfs;
-    private javax.swing.JLabel io_dot_look;
-    private javax.swing.JLabel io_dot_scan;
-    private javax.swing.JLabel io_dot_sstf;
-    private javax.swing.JButton io_import;
-    private javax.swing.JButton io_minus;
-    private javax.swing.JPanel io_output_panel;
-    private javax.swing.JScrollPane io_output_panel_scroll;
-    private javax.swing.JLabel io_position_bg;
-    private javax.swing.JTextField io_position_input;
-    private javax.swing.JLabel io_queue_bg;
-    private javax.swing.JTextField io_queue_input;
-    private javax.swing.JButton io_random;
-    private javax.swing.JButton io_return;
-    private javax.swing.JButton io_return_panel;
-    private javax.swing.JButton io_save;
-    private javax.swing.JLabel io_save_bg;
-    private javax.swing.JLabel io_save_label;
-    private javax.swing.JPanel io_save_panel;
-    private javax.swing.JButton io_save_pdf;
-    private javax.swing.JButton io_save_png;
-    private javax.swing.JLabel io_speed_bg;
-    private javax.swing.JLabel io_speed_label;
-    private javax.swing.JButton io_start;
-    private javax.swing.JLabel io_timer_bg;
-    private javax.swing.JLabel io_timer_label;
-    private javax.swing.JButton minimize;             
+    public javax.swing.JButton exit;
+    public javax.swing.JButton io_add;
+    public javax.swing.JLabel io_algo_label;
+    public javax.swing.JComboBox<String> io_algo_select;
+    public javax.swing.JLabel io_algo_select_label;
+    public javax.swing.JPanel io_backpanel;
+    public javax.swing.JLabel io_bg;
+    public javax.swing.JLabel io_directory_bg;
+    public javax.swing.JTextField io_directory_input;
+    public javax.swing.JLabel io_directory_label;
+    public javax.swing.JLabel io_dot_clook;
+    public javax.swing.JLabel io_dot_cscan;
+    public javax.swing.JLabel io_dot_fcfs;
+    public javax.swing.JLabel io_dot_look;
+    public javax.swing.JLabel io_dot_scan;
+    public javax.swing.JLabel io_dot_sstf;
+    public javax.swing.JButton io_import;
+    public javax.swing.JButton io_minus;
+    public javax.swing.JPanel io_output_panel;
+    public javax.swing.JScrollPane io_output_panel_scroll;
+    public javax.swing.JLabel io_position_bg;
+    public javax.swing.JTextField io_position_input;
+    public javax.swing.JLabel io_speed_value;
+    public javax.swing.JTextField io_queue_input;
+    public javax.swing.JButton io_random;
+    public javax.swing.JButton io_return;
+    public javax.swing.JButton io_return_panel;
+    public javax.swing.JButton io_save;
+    public javax.swing.JLabel io_save_bg;
+    public javax.swing.JLabel io_save_label;
+    public javax.swing.JPanel io_save_panel;
+    public javax.swing.JButton io_save_pdf;
+    public javax.swing.JButton io_save_png;
+    public javax.swing.JLabel io_speed_bg;
+    public javax.swing.JLabel io_speed_label;
+    public javax.swing.JButton io_start;
+    public javax.swing.JLabel io_timer_bg;
+    public javax.swing.JLabel io_timer_label;
+    public javax.swing.JButton minimize;             
+    public ArrayList<Integer> import_ArrayList;
 }
