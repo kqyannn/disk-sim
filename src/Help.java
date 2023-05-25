@@ -91,6 +91,7 @@ public class Help extends javax.swing.JPanel {
     }
 
     private void help_returnActionPerformed(java.awt.event.ActionEvent evt) {
+        Music.sfx();
         DiskSim.card.show(DiskSim.mainPanel, "2");
     }
 
@@ -103,6 +104,7 @@ public class Help extends javax.swing.JPanel {
     }
 
     private void minimizeActionPerformed(java.awt.event.ActionEvent evt) {
+        Music.sfx();
         DiskSim.mainFrame.setState(java.awt.Frame.ICONIFIED);
     }
 
@@ -115,6 +117,7 @@ public class Help extends javax.swing.JPanel {
     }
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {
+        Music.sfx();
         System.exit(0);
     }
 

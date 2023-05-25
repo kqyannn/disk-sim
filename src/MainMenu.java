@@ -2,10 +2,11 @@ public class MainMenu extends javax.swing.JPanel {
     public MainMenu() {
         initComponents();
     }
-
+                   
     private void initComponents() {
         exit = new javax.swing.JButton();
         minimize = new javax.swing.JButton();
+        menu_vol = new javax.swing.JButton();
         menu_run = new javax.swing.JButton();
         menu_help = new javax.swing.JButton();
         menu_about = new javax.swing.JButton();
@@ -56,6 +57,27 @@ public class MainMenu extends javax.swing.JPanel {
         });
         add(minimize);
         minimize.setBounds(990, 10, 40, 30);
+
+        menu_vol.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/mute.png"))); 
+        menu_vol.setBorder(null);
+        menu_vol.setBorderPainted(false);
+        menu_vol.setContentAreaFilled(false);
+        menu_vol.setFocusPainted(false);
+        menu_vol.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                menu_volMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menu_volMouseExited(evt);
+            }
+        });
+        menu_vol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_volActionPerformed(evt);
+            }
+        });
+        add(menu_vol);
+        menu_vol.setBounds(20, 640, 80, 60);
 
         menu_run.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/run.png"))); 
         menu_run.setBorder(null);
@@ -148,83 +170,119 @@ public class MainMenu extends javax.swing.JPanel {
         menu_bg.setBounds(0, 0, 1080, 720);
     }
 
-    private void exitMouseEntered(java.awt.event.MouseEvent evt) {
+    private void exitMouseEntered(java.awt.event.MouseEvent evt) {                                  
         exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/close_hover.png")));
-    }
+    }                                 
 
-    private void exitMouseExited(java.awt.event.MouseEvent evt) {
+    private void exitMouseExited(java.awt.event.MouseEvent evt) {                                 
         exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/close.png")));
-    }
+    }                                
 
-    private void exitActionPerformed(java.awt.event.ActionEvent evt) {
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {   
+        Music.sfx();                                  
         System.exit(0);
-    }
+    }                                    
 
-    private void minimizeMouseEntered(java.awt.event.MouseEvent evt) {
+    private void minimizeMouseEntered(java.awt.event.MouseEvent evt) {                                      
         minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/min_hover.png")));
-    }
+    }                                     
 
-    private void minimizeMouseExited(java.awt.event.MouseEvent evt) {
+    private void minimizeMouseExited(java.awt.event.MouseEvent evt) {                                     
         minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/min.png")));
-    }
+    }                                    
 
-    private void minimizeActionPerformed(java.awt.event.ActionEvent evt) {
+    private void minimizeActionPerformed(java.awt.event.ActionEvent evt) {        
+        Music.sfx();                                 
         DiskSim.mainFrame.setState(java.awt.Frame.ICONIFIED);
-    }
+    }                                        
 
-    private void menu_helpMouseEntered(java.awt.event.MouseEvent evt) {
+    private void menu_helpMouseEntered(java.awt.event.MouseEvent evt) {                                       
         menu_help.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/help_hover.png")));
-    }
+    }                                      
 
-    private void menu_helpMouseExited(java.awt.event.MouseEvent evt) {
+    private void menu_helpMouseExited(java.awt.event.MouseEvent evt) {                                      
         menu_help.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/help.png")));
-    }
+    }                                     
 
-    private void menu_helpActionPerformed(java.awt.event.ActionEvent evt) {
+    private void menu_helpActionPerformed(java.awt.event.ActionEvent evt) {    
+        Music.sfx();                                      
         DiskSim.card.show(DiskSim.mainPanel, "3");
-    }
+    }                                         
 
-    private void menu_runMouseEntered(java.awt.event.MouseEvent evt) {
+    private void menu_runMouseEntered(java.awt.event.MouseEvent evt) {                                      
         menu_run.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/run_hover.png")));
-    }
+    }                                     
 
-    private void menu_runMouseExited(java.awt.event.MouseEvent evt) {
+    private void menu_runMouseExited(java.awt.event.MouseEvent evt) {                                     
         menu_run.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/run.png")));
-    }
+    }                                    
 
-    private void menu_runActionPerformed(java.awt.event.ActionEvent evt) {
+    private void menu_runActionPerformed(java.awt.event.ActionEvent evt) {    
+        Music.sfx();                                     
         DiskSim.card.show(DiskSim.mainPanel, "5");
-    }
+    }                                        
 
-    private void menu_aboutMouseEntered(java.awt.event.MouseEvent evt) {
+    private void menu_aboutMouseEntered(java.awt.event.MouseEvent evt) {                                        
         menu_about.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/about_hover.png")));
-    }
+    }                                       
 
-    private void menu_aboutMouseExited(java.awt.event.MouseEvent evt) {
+    private void menu_aboutMouseExited(java.awt.event.MouseEvent evt) {                                       
         menu_about.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/about.png")));
-    }
+    }                                      
 
-    private void menu_aboutActionPerformed(java.awt.event.ActionEvent evt) {
+    private void menu_aboutActionPerformed(java.awt.event.ActionEvent evt) {   
+        Music.sfx();                                        
         DiskSim.card.show(DiskSim.mainPanel, "4");
-    }
+    }                                          
 
-    private void menu_exitMouseEntered(java.awt.event.MouseEvent evt) {
+    private void menu_exitMouseEntered(java.awt.event.MouseEvent evt) {                                       
         menu_exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/exit_hover.png")));
-    }
+    }                                      
 
-    private void menu_exitMouseExited(java.awt.event.MouseEvent evt) {
+    private void menu_exitMouseExited(java.awt.event.MouseEvent evt) {                                      
         menu_exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/exit.png")));
-    }
+    }                                     
 
-    private void menu_exitActionPerformed(java.awt.event.ActionEvent evt) {
+    private void menu_exitActionPerformed(java.awt.event.ActionEvent evt) {   
+        Music.sfx();                                       
         System.exit(0);
-    }
+    }                                         
 
+    private void menu_volMouseEntered(java.awt.event.MouseEvent evt) {                                  
+        if(DiskSim.sound == true) {
+            menu_vol.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/mute_hover.png")));
+        } else {
+            menu_vol.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/muteX_hover.png")));
+        } 
+    }                                     
+
+    private void menu_volMouseExited(java.awt.event.MouseEvent evt) {                                     
+        if(DiskSim.sound == true) {
+            menu_vol.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/mute.png")));
+        } else {
+            menu_vol.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/muteX.png")));
+        } 
+    }                                    
+
+    private void menu_volActionPerformed(java.awt.event.ActionEvent evt) {   
+        Music.sfx();                                      
+        if(DiskSim.sound == true) {
+            DiskSim.sound = false;
+            menu_vol.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/muteX.png")));
+            Music.bgMusic.pause();
+        } else {
+            DiskSim.sound = true;
+            menu_vol.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/mute.png")));
+            Music.bgMusic.play();
+        }
+    }                                        
+                  
     private javax.swing.JButton exit;
     private javax.swing.JButton menu_about;
     private javax.swing.JLabel menu_bg;
     private javax.swing.JButton menu_exit;
     private javax.swing.JButton menu_help;
     private javax.swing.JButton menu_run;
-    private javax.swing.JButton minimize;
+    private javax.swing.JButton menu_vol;
+    private javax.swing.JButton minimize;         
 }

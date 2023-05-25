@@ -4,7 +4,7 @@ This program is a Disk Scheduling Algorithm Simulator developed by 3 third-year 
 
 ## Acknowledgements
 
- - [Retro Funk 20.03.2022 1714](https://freesound.org/people/sonically_sound/sounds/624874/) by [sonically_sound](https://freesound.org/people/sonically_sound/)
+ - [The Plan - Upbeat Loop](https://freesound.org/s/384947/) by [ispeakwaves](https://freesound.org/people/ispeakwaves/)
 
 
 ## Deployment

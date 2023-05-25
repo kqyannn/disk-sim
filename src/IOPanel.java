@@ -498,7 +498,8 @@ public class IOPanel extends javax.swing.JPanel {
         exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/close.png")));
     }                                
 
-    private void exitActionPerformed(java.awt.event.ActionEvent evt) {                                     
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {          
+        Music.sfx();                           
         System.exit(0);
     }                                    
 
@@ -510,7 +511,8 @@ public class IOPanel extends javax.swing.JPanel {
         minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/min.png")));
     }                                    
 
-    private void minimizeActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    private void minimizeActionPerformed(java.awt.event.ActionEvent evt) {          
+        Music.sfx();                               
         DiskSim.mainFrame.setState(java.awt.Frame.ICONIFIED);
     }                                        
 
@@ -522,7 +524,8 @@ public class IOPanel extends javax.swing.JPanel {
         io_return.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/return.png")));
     }                                     
 
-    private void io_returnActionPerformed(java.awt.event.ActionEvent evt) {                                          
+    private void io_returnActionPerformed(java.awt.event.ActionEvent evt) {  
+        Music.sfx();                                        
         DiskSim.card.show(DiskSim.mainPanel, "2");
     }                                         
 
@@ -534,7 +537,8 @@ public class IOPanel extends javax.swing.JPanel {
         io_save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/save.png")));
     }                                   
 
-    private void io_saveActionPerformed(java.awt.event.ActionEvent evt) {                                        
+    private void io_saveActionPerformed(java.awt.event.ActionEvent evt) {    
+        Music.sfx();                                    
         setPanelEnabled(io_backpanel, false);
         io_save_panel.setVisible(true);
     }                                       
@@ -548,7 +552,8 @@ public class IOPanel extends javax.swing.JPanel {
     }                                  
 
     private void io_addActionPerformed(java.awt.event.ActionEvent evt) {                                       
-        
+        Music.sfx();
+
     }                                      
 
     private void io_minusMouseEntered(java.awt.event.MouseEvent evt) {                                      
@@ -560,7 +565,8 @@ public class IOPanel extends javax.swing.JPanel {
     }                                    
 
     private void io_minusActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        
+        Music.sfx();
+
     }                                        
 
     private void io_importMouseEntered(java.awt.event.MouseEvent evt) {                                       
@@ -572,7 +578,8 @@ public class IOPanel extends javax.swing.JPanel {
     }                                     
 
     private void io_importActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        
+        Music.sfx();
+
     }                                         
 
     private void io_randomMouseEntered(java.awt.event.MouseEvent evt) {                                       
@@ -584,7 +591,8 @@ public class IOPanel extends javax.swing.JPanel {
     }                                     
 
     private void io_randomActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        
+        Music.sfx();
+
     }                                         
 
     private void io_startMouseEntered(java.awt.event.MouseEvent evt) {                                      
@@ -596,7 +604,8 @@ public class IOPanel extends javax.swing.JPanel {
     }                                    
 
     private void io_startActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        
+        Music.sfx();
+
     }                                        
 
     private void io_save_pngMouseEntered(java.awt.event.MouseEvent evt) {                                         
@@ -608,7 +617,8 @@ public class IOPanel extends javax.swing.JPanel {
     }                                       
 
     private void io_save_pngActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        
+        Music.sfx();
+
     }                                           
 
     private void io_save_pdfMouseEntered(java.awt.event.MouseEvent evt) {                                         
@@ -620,7 +630,8 @@ public class IOPanel extends javax.swing.JPanel {
     }                                       
 
     private void io_save_pdfActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        
+        Music.sfx();
+
     }                                           
 
     private void io_return_panelMouseEntered(java.awt.event.MouseEvent evt) {                                             
@@ -631,7 +642,8 @@ public class IOPanel extends javax.swing.JPanel {
         io_return_panel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/buttons/return.png")));
     }                                           
 
-    private void io_return_panelActionPerformed(java.awt.event.ActionEvent evt) {                                                
+    private void io_return_panelActionPerformed(java.awt.event.ActionEvent evt) {     
+        Music.sfx();                                           
         setPanelEnabled(io_backpanel, true);
         io_save_panel.setVisible(false);
     }                                               
