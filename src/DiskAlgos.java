@@ -9,6 +9,15 @@ static int size = 8;
 static int disk_size = 200;
 static int[] sequence;
 
+// size is the number of elements in the array 
+public static void setSize(int size) {
+    DiskAlgos.size = size;
+}
+
+public static void setDisk_size(int disk_size) {
+    DiskAlgos.disk_size = disk_size;
+}
+
 public static int[] getSequence() {
     return sequence;
 }
