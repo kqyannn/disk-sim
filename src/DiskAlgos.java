@@ -505,21 +505,21 @@ public static void main(String[] args)
     // add space
     System.out.println("----FCFS----");
     FCFS(arr, head);
+    //add space
+    System.out.println("----SSTF----");
+    SSTF(arr, head);
     // add space
-    // System.out.println("----SSTF----");
-    // SSTF(arr, head);
-    // // add space
-    // System.out.println("----SCAB-----");
-    // SCAN(arr,head,direction);
-    // // add space
-    // System.out.println("----CSCAN----");
-    // CSCAN(arr, head);
-    // // add space
-    // System.out.println("----LOOK----");
-    // LOOK(arr, head, direction);
-    // // add space
-    // System.out.println("----CLOOK----");
-    // CLOOK(arr, head);
+    System.out.println("----SCAB-----");
+    SCAN(arr,head,direction);
+    // add space
+    System.out.println("----CSCAN----");
+    CSCAN(arr, head);
+    // add space
+    System.out.println("----LOOK----");
+    LOOK(arr, head, direction);
+    // add space
+    System.out.println("----CLOOK----");
+    CLOOK(arr, head);
 }
 
 }
