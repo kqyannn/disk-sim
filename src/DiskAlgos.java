@@ -497,9 +497,8 @@ public static void CLOOK(int arr[], int head)
 public static void main(String[] args)
 {
     // request array
-    int arr[] = { 176, 79, 34, 60,
-                  80, 92, 11, 41, 114 };
-    int head = 176;
+    int arr[] = {82,170,43,140,24,16,190};
+    int head = 50;
     System.out.println("Head at :"+head);
     String direction = "left";
     // add space
