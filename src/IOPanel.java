@@ -20,6 +20,8 @@ public class IOPanel extends javax.swing.JPanel {
     final int cylinder_line = 199;
     final int req_caps = 40;
     int[] main_queue;
+    int head;
+    private ArrayList<Integer> temp_array;
 
 
     public void reset(){
@@ -825,7 +827,68 @@ public class IOPanel extends javax.swing.JPanel {
         io_start.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/start.png")));
     }                                    
 
-    public void io_startActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    public void io_startActionPerformed(java.awt.event.ActionEvent evt) {               
+        System.out.println("RUN");
+        temp_array = new ArrayList<Integer>();
+        try(Scanner read = new Scanner(io_queue_input.getText())) {
+            // int i = 0;
+            while(read.hasNext()){
+                temp_array.add(read.nextInt());
+            }
+
+            // System.out.println(temp_array + " from arraylist");
+
+            main_queue = new int[temp_array.size()];
+            
+            for(int i = 0; i < temp_array.size(); i++){
+                main_queue[i] = temp_array.get(i);
+                // System.out.println(main_queue[i] + " from array");
+            }
+            
+            head = Integer.valueOf(io_position_input.getText());
+            // System.out.println(head);
+
+
+            //main queue and head is set
+            String direction = "right";
+            int choose = io_algo_select.getSelectedIndex();
+            // System.out.println(choose);
+            switch(choose){
+                case 0:
+                System.out.println("FCFS");
+                DiskAlgos.FCFS(main_queue, head);
+                break;
+
+                case 1:
+                System.out.println("SSTF");
+                DiskAlgos.SSTF(main_queue, head);
+                break;
+
+                case 2:
+                System.out.println("SCAN");
+                DiskAlgos.SCAN(main_queue, head, direction);
+                break;
+
+                case 3:
+                System.out.println("CSCAN");
+                DiskAlgos.CSCAN(main_queue, head);
+                break;
+
+                case 4:
+                System.out.println("LOOK");
+                DiskAlgos.LOOK(main_queue, head, direction);
+                break;
+
+                case 5:
+                System.out.println("CLOOK");
+                DiskAlgos.CLOOK(main_queue, head);
+                break;
+            }
+
+            
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
         Music.sfx();
 
     }                                        
