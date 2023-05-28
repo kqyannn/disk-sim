@@ -5,13 +5,13 @@ import java.util.Vector;
 class DiskAlgos
 {
 
-static int size = 8;
+// static int size = 8;
 static int disk_size = 200;
 static int[] sequence;
 
 // size is the number of elements in the array 
 public static void setSize(int size) {
-    DiskAlgos.size = size;
+    // DiskAlgos.size = size;
 }
 
 public static void setDisk_size(int disk_size) {
@@ -24,6 +24,7 @@ public static int[] getSequence() {
  
 static void FCFS(int arr[], int head)
 {
+    int size = arr.length;
     int seek_count = 0;
     int distance, cur_track;
  
@@ -83,8 +84,8 @@ static void FCFS(int arr[], int head)
     }
  
     public static void SSTF(int request[],int head)
-                                                      
-    {
+     {
+        // int size = request.length;
         if (request.length == 0)
             return;
              
@@ -135,6 +136,7 @@ static void FCFS(int arr[], int head)
 
 static void SCAN(int arr[], int head, String direction)
 {
+    int size = arr.length;
     int seek_count = 0;
     int distance, cur_track;
     Vector<Integer> left = new Vector<Integer>(),
@@ -224,6 +226,7 @@ static void SCAN(int arr[], int head, String direction)
 
 public static void CSCAN(int arr[], int head)
     {
+        int size = arr.length;
         int seek_count = 0;
         int distance, cur_track;
   
@@ -310,9 +313,9 @@ public static void CSCAN(int arr[], int head)
         sequence = seek_sequence.stream().mapToInt(i->i).toArray();
     }
 
-    public static void LOOK(int arr[], int head,
-    String direction)
+public static void LOOK(int arr[], int head, String direction)
 {
+int size = arr.length;
 int seek_count = 0;
 int distance, cur_track;
 
@@ -406,6 +409,7 @@ sequence = seek_sequence.stream().mapToInt(i->i).toArray();
 
 public static void CLOOK(int arr[], int head)
 {
+    int size = arr.length;
     int seek_count = 0;
     int distance, cur_track;
      
@@ -493,28 +497,29 @@ public static void CLOOK(int arr[], int head)
 public static void main(String[] args)
 {
     // request array
-    int arr[] = {82,170,43,140,24,16, 90, };
-    int head = 24;
+    int arr[] = { 176, 79, 34, 60,
+                  80, 92, 11, 41, 114 };
+    int head = 176;
     System.out.println("Head at :"+head);
     String direction = "left";
     // add space
     System.out.println("----FCFS----");
     FCFS(arr, head);
     // add space
-    System.out.println("----SSTF----");
-    SSTF(arr, head);
-    // add space
-    System.out.println("----SCAB-----");
-    SCAN(arr,head,direction);
-    // add space
-    System.out.println("----CSCAN----");
-    CSCAN(arr, head);
-    // add space
-    System.out.println("----LOOK----");
-    LOOK(arr, head, direction);
-    // add space
-    System.out.println("----CLOOK----");
-    CLOOK(arr, head);
+    // System.out.println("----SSTF----");
+    // SSTF(arr, head);
+    // // add space
+    // System.out.println("----SCAB-----");
+    // SCAN(arr,head,direction);
+    // // add space
+    // System.out.println("----CSCAN----");
+    // CSCAN(arr, head);
+    // // add space
+    // System.out.println("----LOOK----");
+    // LOOK(arr, head, direction);
+    // // add space
+    // System.out.println("----CLOOK----");
+    // CLOOK(arr, head);
 }
 
 }
