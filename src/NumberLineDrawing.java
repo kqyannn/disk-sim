@@ -43,11 +43,11 @@ public class NumberLineDrawing extends JPanel {
         g2d.setStroke(new BasicStroke(3));
         g2d.drawLine(0, height / 2, width, height / 2);
 
-        // g2d.drawLine(0, 0, 500, 100);
-        // g2d.fillOval(495, 95, 10, 10);
-        // g2d.drawLine(500, 100, 200, 300);
-        // g2d.fillOval(200-5, 300-5, 10, 10);
-        // g2d.drawLine(200, 300, 90, 60);
+        g2d.drawLine(0, 0, 500, 100);
+        g2d.fillOval(495, 95, 10, 10);
+        g2d.drawLine(500, 100, 200, 300);
+        g2d.fillOval(200-5, 300-5, 10, 10);
+        g2d.drawLine(200, 300, 90, 60);
 
         // Plot the sequence on the number line
         int sequenceSize = sequence.size();
