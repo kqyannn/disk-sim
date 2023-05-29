@@ -8,6 +8,7 @@ public class NumberLineDrawing extends JPanel {
     public int[] results;
     public int head;
     private ArrayList<Integer> sequence;
+    final int true_width = 940;
 
     public NumberLineDrawing(int start, int end, ArrayList<Integer> sequence, int[] results, int head) {
         this.start = start;
@@ -24,7 +25,7 @@ public class NumberLineDrawing extends JPanel {
 
         Graphics2D g2d = (Graphics2D) g;
 
-        int width = getWidth();
+        int width = true_width;
         int height = 100;
 
         // Set up drawing properties
@@ -60,7 +61,44 @@ public class NumberLineDrawing extends JPanel {
         int sequenceSize = sequence.size();
         int sequenceMarkerSize = 8;
 
+        
+
         for (int i = 0; i < sequenceSize; i++) {
+
+            if(i == 0){
+
+                int number = 0;
+
+            int x = (number - start) * tickInterval;
+            System.out.println(start);
+            x = x + 10;
+            g2d.drawLine(x, height / 2 - 10, x, height / 2 + 10); // ticks
+            // Adjust y position to avoid overlapping with tick marks
+            int y = height / 2 - 10 - sequenceMarkerSize;
+           
+
+            g2d.setColor(Color.RED);
+            g2d.fillOval(x - sequenceMarkerSize / 2, y, sequenceMarkerSize, sequenceMarkerSize);
+            g2d.setColor(Color.BLACK);
+            g2d.drawString(String.valueOf(number), x - 5, y - 5);
+
+            number = 199;
+
+            x = (number - start) * tickInterval;
+            System.out.println(start);
+            x = x + 10;
+            g2d.drawLine(x, height / 2 - 10, x, height / 2 + 10); // ticks
+            // Adjust y position to avoid overlapping with tick marks
+            y = height / 2 - 10 - sequenceMarkerSize;
+           
+
+            g2d.setColor(Color.RED);
+            g2d.fillOval(x - sequenceMarkerSize / 2, y, sequenceMarkerSize, sequenceMarkerSize);
+            g2d.setColor(Color.BLACK);
+            g2d.drawString(String.valueOf(number), x - 5, y - 5);
+
+            }
+
             int number = sequence.get(i);
 
             int x = (number - start) * tickInterval;
@@ -85,11 +123,11 @@ public class NumberLineDrawing extends JPanel {
     public void lineWriter(Graphics g2d, int head) {
 
         int length = Math.abs(start) + Math.abs(end) + 1;
-        int width = getWidth();
+        int width = true_width;
         int ticks = width / length;
         int number = head;
         int startY = 50;
-        int newX = 0;
+        // int newX = 0;
         int nextY = 0;
         int startX = (number - 0) * ticks;
         startX = startX + 10;

@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.image.PixelGrabber;
@@ -8,6 +10,9 @@ import java.util.Scanner;
 
 import javax.swing.Action;
 import javax.swing.JFileChooser;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 
 import org.w3c.dom.events.Event;
 
@@ -34,6 +39,7 @@ public class IOPanel extends javax.swing.JPanel {
     public void initComponents() {
         
         speed = 1;
+        
         exit = new javax.swing.JButton();
         minimize = new javax.swing.JButton();
         io_save_panel = new javax.swing.JPanel();
@@ -245,6 +251,8 @@ public class IOPanel extends javax.swing.JPanel {
             io_output_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 330, Short.MAX_VALUE)
         );
+
+
 
         io_output_panel_scroll.setViewportView(io_output_panel);
 
@@ -831,6 +839,8 @@ public class IOPanel extends javax.swing.JPanel {
         System.out.println("RUN");
         temp_array = new ArrayList<Integer>();
         try(Scanner read = new Scanner(io_queue_input.getText())) {
+
+            
             // int i = 0;
             while(read.hasNext()){
                 temp_array.add(read.nextInt());
@@ -884,6 +894,38 @@ public class IOPanel extends javax.swing.JPanel {
                 DiskAlgos.CLOOK(main_queue, head);
                 break;
             }
+            
+
+            int start = 0;
+
+            // System.out.print("Enter the end value: ");
+            int end = 199;
+    
+            ArrayList<Integer> sequence = new ArrayList<>();
+            int[] array = {53,98,183,37,122,14,124,65,67};
+            int head = 53;
+            int[] results = {53,98,183,37,122,14,124,65,67};
+            for(int i = 0; i < array.length; i++){
+                sequence.add(array[i]);
+            }
+            numberline = new NumberLineDrawing(start, end, sequence, results, head);
+            // numberline.setAutoscrolls(true);
+            
+           
+            numberline.setPreferredSize(new Dimension(920, array.length + 500));
+            // numberline.setBounds(getX(), getY(), 200, 200);
+            // io_output_panel.add(numberline);
+            // io_output_panel_scroll.add(numberline);
+            // io_output_panel_scroll.setViewportView(numberline);
+            // numberline.setBackground(Color.red);
+            // System.out.println(io_output_panel_scroll.getBounds());
+            // JScrollPane scrollPane = new JScrollPane(numberline);
+            // scrollPane.setBounds(100,100,numberline.true_width, 330);
+            // scrollPane.setBackground(Color.red);
+            // add(scrollPane);
+            io_output_panel_scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+            io_output_panel_scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+           io_output_panel_scroll.setViewportView(numberline);
 
             
         } catch (Exception e) {
@@ -984,4 +1026,5 @@ public class IOPanel extends javax.swing.JPanel {
     public javax.swing.JLabel io_timer_label;
     public javax.swing.JButton minimize;             
     public ArrayList<Integer> import_ArrayList;
+    public NumberLineDrawing numberline;
 }

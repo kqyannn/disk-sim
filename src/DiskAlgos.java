@@ -22,7 +22,7 @@ public static int[] getSequence() {
     return sequence;
 }
  
-static void FCFS(int arr[], int head)
+static int[] FCFS(int arr[], int head)
 {
     int size = arr.length;
     int seek_count = 0;
@@ -55,6 +55,8 @@ static void FCFS(int arr[], int head)
         System.out.println(arr[i]);
     }
     sequence = arr.clone();
+
+    return sequence;
 }
 
 // Calculates difference of each
