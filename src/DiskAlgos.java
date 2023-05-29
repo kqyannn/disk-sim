@@ -85,11 +85,11 @@ static int[] FCFS(int arr[], int head)
         return index;
     }
  
-    public static void SSTF(int request[],int head)
+    public static int[] SSTF(int request[],int head)
      {
         // int size = request.length;
         if (request.length == 0)
-            return;
+            return request;
              
         // create array of objects of class node   
         Node diff[] = new Node[request.length];
@@ -134,6 +134,7 @@ static int[] FCFS(int arr[], int head)
             System.out.println(seek_sequence[i]);
 
         sequence = seek_sequence.clone();
+        return sequence;
     }
 
 static void SCAN(int arr[], int head, String direction)

@@ -889,8 +889,19 @@ public class IOPanel extends javax.swing.JPanel {
                 break;
 
                 case 1:
+                //SSTF CASE IS DIFFERENT, IF PRINTING REQUIRES AUTOMATION, EXCLUDE SSTF
                 System.out.println("SSTF");
-                DiskAlgos.SSTF(main_queue, head);
+                // results[0] = head;
+                results = DiskAlgos.SSTF(main_queue, head);
+                // for(int i = 0; i < results.length; i++){
+                //     temp_results.add(results[i]);
+                // }
+
+                // results = new int[temp_results.size()];
+                // for(int i = 0; i < temp_results.size(); i++){
+                //     results[i] = temp_results.get(i);
+                // }
+                
                 break;
 
                 case 2:
@@ -931,7 +942,7 @@ public class IOPanel extends javax.swing.JPanel {
             // numberline.setAutoscrolls(true);
             
            
-            numberline.setPreferredSize(new Dimension(920, main_queue.length + 500));
+            numberline.setPreferredSize(new Dimension(920, main_queue.length * 100));
             // numberline.setBounds(getX(), getY(), 200, 200);
             // io_output_panel.add(numberline);
             // io_output_panel_scroll.add(numberline);
