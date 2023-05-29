@@ -9,6 +9,7 @@ public class NumberLineDrawing extends JPanel {
     public int head;
     private ArrayList<Integer> sequence;
     final int true_width = 940;
+   
 
     public NumberLineDrawing(int start, int end, ArrayList<Integer> sequence, int[] results, int head) {
         this.start = start;
@@ -16,6 +17,7 @@ public class NumberLineDrawing extends JPanel {
         this.sequence = sequence;
         this.results = results;
         this.head = head;
+        super.setBackground(Color.white);
 
     }
 
