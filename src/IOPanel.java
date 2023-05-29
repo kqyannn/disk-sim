@@ -886,7 +886,6 @@ public class IOPanel extends javax.swing.JPanel {
                     results[i] = temp_results.get(i);
                 }
                 
-
                 break;
 
                 case 1:
