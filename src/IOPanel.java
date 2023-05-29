@@ -858,15 +858,35 @@ public class IOPanel extends javax.swing.JPanel {
             head = Integer.valueOf(io_position_input.getText());
             // System.out.println(head);
 
+            ArrayList<Integer> sequence = new ArrayList<>();
+            ArrayList<Integer> temp_results = new ArrayList<>();
 
             //main queue and head is set
+            sequence.add(head);
+            temp_results.add(head);
+            for(int i = 0; i < main_queue.length; i++){
+                sequence.add(main_queue[i]);
+            }
+            int [] results = new int[sequence.size() + 1];
+
             String direction = "right";
             int choose = io_algo_select.getSelectedIndex();
             // System.out.println(choose);
             switch(choose){
                 case 0:
                 System.out.println("FCFS");
-                DiskAlgos.FCFS(main_queue, head);
+                // results[0] = head;
+                results = DiskAlgos.FCFS(main_queue, head);
+                for(int i = 0; i < results.length; i++){
+                    temp_results.add(results[i]);
+                }
+
+                results = new int[temp_results.size()];
+                for(int i = 0; i < temp_results.size(); i++){
+                    results[i] = temp_results.get(i);
+                }
+                
+
                 break;
 
                 case 1:
@@ -901,18 +921,18 @@ public class IOPanel extends javax.swing.JPanel {
             // System.out.print("Enter the end value: ");
             int end = 199;
     
-            ArrayList<Integer> sequence = new ArrayList<>();
-            int[] array = {53,98,183,37,122,14,124,65,67};
-            int head = 53;
-            int[] results = {53,98,183,37,122,14,124,65,67};
-            for(int i = 0; i < array.length; i++){
-                sequence.add(array[i]);
-            }
+            // ArrayList<Integer> sequence = new ArrayList<>();
+            // int[] array = {53,98,183,37,122,14,124,65,67};
+            // int head = 53;
+            // int[] results = {53,98,183,37,122,14,124,65,67};
+            // for(int i = 0; i < array.length; i++){
+            //     sequence.add(array[i]);
+            // }
             numberline = new NumberLineDrawing(start, end, sequence, results, head);
             // numberline.setAutoscrolls(true);
             
            
-            numberline.setPreferredSize(new Dimension(920, array.length + 500));
+            numberline.setPreferredSize(new Dimension(920, main_queue.length + 500));
             // numberline.setBounds(getX(), getY(), 200, 200);
             // io_output_panel.add(numberline);
             // io_output_panel_scroll.add(numberline);

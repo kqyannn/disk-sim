@@ -182,7 +182,7 @@ public class NumberLineDrawing extends JPanel {
         ArrayList<Integer> sequence = new ArrayList<>();
         int[] array = {53,98,183,37,122,14,124,65,67};
         int head = 53;
-        int[] results = {53,98,183,37,122,14,124,65,67};
+        int[] results = {53,183,98,183,37,14,124,65,67};
         for(int i = 0; i < array.length; i++){
             sequence.add(array[i]);
         }
