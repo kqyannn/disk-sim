@@ -8,6 +8,7 @@ class DiskAlgos
 // static int size = 8;
 static int disk_size = 200;
 static int[] sequence;
+static int total_distance;
 
 // size is the number of elements in the array 
 public static void setSize(int size) {
@@ -20,6 +21,14 @@ public static void setDisk_size(int disk_size) {
 
 public static int[] getSequence() {
     return sequence;
+}
+
+public static int getTotal_distance() {
+    return total_distance;
+}
+
+public static void setTotal_distance(int total_distance) {
+    DiskAlgos.total_distance = total_distance;
 }
  
 static int[] FCFS(int arr[], int head)
@@ -55,6 +64,7 @@ static int[] FCFS(int arr[], int head)
         System.out.println(arr[i]);
     }
     sequence = arr.clone();
+    setTotal_distance(seek_count);
 
     return sequence;
 }
@@ -134,6 +144,8 @@ static int[] FCFS(int arr[], int head)
             System.out.println(seek_sequence[i]);
 
         sequence = seek_sequence.clone();
+
+        setTotal_distance(seek_count);
         return sequence;
     }
 
@@ -212,6 +224,7 @@ static void SCAN(int arr[], int head, String direction)
             }
             direction = "left";
         }
+        setTotal_distance(seek_count);
     }
  
     System.out.print("Total number of seek operations = "
@@ -314,6 +327,7 @@ public static void CSCAN(int arr[], int head)
             System.out.println(seek_sequence.get(i));
         }
         sequence = seek_sequence.stream().mapToInt(i->i).toArray();
+        setTotal_distance(seek_count);
     }
 
 public static void LOOK(int arr[], int head, String direction)
@@ -408,6 +422,7 @@ for(int i = 0; i < seek_sequence.size(); i++)
 System.out.println(seek_sequence.get(i));
 }
 sequence = seek_sequence.stream().mapToInt(i->i).toArray();
+setTotal_distance(seek_count);
 }
 
 public static void CLOOK(int arr[], int head)
@@ -494,6 +509,7 @@ public static void CLOOK(int arr[], int head)
         System.out.println(seek_sequence.get(i));
     }
     sequence = seek_sequence.stream().mapToInt(i->i).toArray();
+    setTotal_distance(seek_count);
 }
  
 // Driver code
