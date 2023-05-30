@@ -5,14 +5,14 @@ import java.util.Vector;
 class DiskAlgos
 {
 
-static int size = 8;
+// static int size = 8;
 static int disk_size = 200;
 static int[] sequence;
 static int total_distance;
 
 // size is the number of elements in the array 
 public static void setSize(int size) {
-    DiskAlgos.size = size;
+    // DiskAlgos.size = size;
 }
 
 public static void setDisk_size(int disk_size) {
@@ -31,8 +31,9 @@ public static void setTotal_distance(int total_distance) {
     DiskAlgos.total_distance = total_distance;
 }
  
-static void FCFS(int arr[], int head)
+static int[] FCFS(int arr[], int head)
 {
+    int size = arr.length;
     int seek_count = 0;
     int distance, cur_track;
  
@@ -64,6 +65,8 @@ static void FCFS(int arr[], int head)
     }
     sequence = arr.clone();
     setTotal_distance(seek_count);
+
+    return sequence;
 }
 
 // Calculates difference of each
@@ -92,11 +95,11 @@ static void FCFS(int arr[], int head)
         return index;
     }
  
-    public static void SSTF(int request[],int head)
-                                                      
-    {
+    public static int[] SSTF(int request[],int head)
+     {
+        // int size = request.length;
         if (request.length == 0)
-            return;
+            return request;
              
         // create array of objects of class node   
         Node diff[] = new Node[request.length];
@@ -141,11 +144,14 @@ static void FCFS(int arr[], int head)
             System.out.println(seek_sequence[i]);
 
         sequence = seek_sequence.clone();
+
         setTotal_distance(seek_count);
+        return sequence;
     }
 
 static void SCAN(int arr[], int head, String direction)
 {
+    int size = arr.length;
     int seek_count = 0;
     int distance, cur_track;
     Vector<Integer> left = new Vector<Integer>(),
@@ -236,6 +242,7 @@ static void SCAN(int arr[], int head, String direction)
 
 public static void CSCAN(int arr[], int head)
     {
+        int size = arr.length;
         int seek_count = 0;
         int distance, cur_track;
   
@@ -323,9 +330,9 @@ public static void CSCAN(int arr[], int head)
         setTotal_distance(seek_count);
     }
 
-    public static void LOOK(int arr[], int head,
-    String direction)
+public static void LOOK(int arr[], int head, String direction)
 {
+int size = arr.length;
 int seek_count = 0;
 int distance, cur_track;
 
@@ -420,6 +427,7 @@ setTotal_distance(seek_count);
 
 public static void CLOOK(int arr[], int head)
 {
+    int size = arr.length;
     int seek_count = 0;
     int distance, cur_track;
      
@@ -508,15 +516,14 @@ public static void CLOOK(int arr[], int head)
 public static void main(String[] args)
 {
     // request array
-    int arr[] = { 176, 79, 34, 60,
-                  92, 11, 41, 114 };
-    int head = 176;
+    int arr[] = {82,170,43,140,24,16,190};
+    int head = 50;
     System.out.println("Head at :"+head);
     String direction = "left";
     // add space
     System.out.println("----FCFS----");
     FCFS(arr, head);
-    // add space
+    //add space
     System.out.println("----SSTF----");
     SSTF(arr, head);
     // add space

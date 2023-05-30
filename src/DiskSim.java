@@ -34,7 +34,7 @@ public class DiskSim extends javax.swing.JFrame {
         mainFrame.setLocationRelativeTo(null);
         
         card.show(mainPanel, "1");
-//        Music.bgMusic();
+        Music.bgMusic();
         
         new java.util.Timer().schedule(new java.util.TimerTask() {
             @Override
@@ -45,6 +45,12 @@ public class DiskSim extends javax.swing.JFrame {
     }
 
     public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new DiskSim();
