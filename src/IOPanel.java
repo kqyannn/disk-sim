@@ -20,6 +20,7 @@ public class IOPanel extends javax.swing.JPanel {
     public IOPanel() {
         initComponents();
     }
+    String direction = "right";
     int selected;
     double speed;
     final int cylinder_line = 199;
@@ -40,6 +41,8 @@ public class IOPanel extends javax.swing.JPanel {
         
         speed = 1;
         
+        io_left_button = new javax.swing.JButton();
+        io_right_button = new javax.swing.JButton();
         exit = new javax.swing.JButton();
         minimize = new javax.swing.JButton();
         io_save_panel = new javax.swing.JPanel();
@@ -321,6 +324,60 @@ public class IOPanel extends javax.swing.JPanel {
         });
         io_backpanel.add(io_import);
         io_import.setBounds(550, 90, 130, 40);
+
+        io_left_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/left.png"))); 
+        io_right_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/right_after.png"))); 
+        
+        io_left_button.setBorder(null);
+        io_left_button.setBorderPainted(false);
+        io_left_button.setContentAreaFilled(false);
+        io_right_button.setBorder(null);
+        io_right_button.setBorderPainted(false);
+        io_right_button.setContentAreaFilled(false);
+        
+
+        io_left_button.setBounds(560, 140, 59, 20);
+        io_right_button.setBounds(560 + 55 + 8, 140, 59, 20);
+
+        // io_left_button.addMouseListener(new java.awt.event.MouseAdapter() {
+        //     public void mouseEntered(java.awt.event.MouseEvent evt) {
+        //         io_left_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/left_after.png"))); 
+        //     }
+        //     public void mouseExited(java.awt.event.MouseEvent evt) {
+        //         io_left_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/left.png"))); 
+        //     }
+        // });
+
+        // io_right_button.addMouseListener(new java.awt.event.MouseAdapter() {
+        //     public void mouseEntered(java.awt.event.MouseEvent evt) {
+        //         io_right_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/right_after.png"))); 
+        //     }
+        //     public void mouseExited(java.awt.event.MouseEvent evt) {
+        //         // io_right_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/right.png"))); 
+        //     }
+        // });
+
+        io_right_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                // io_startActionPerformed(evt);
+                direction = "right";
+                io_right_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/right_after.png"))); 
+                io_left_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/left.png"))); 
+            }
+        });
+
+        io_left_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                direction = "left";
+                // io_startActionPerformed(evt);
+                // direction = "right";
+                io_left_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/left_after.png"))); 
+                io_right_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/right.png"))); 
+            }
+        });
+
+        add(io_right_button);
+        add(io_left_button);
 
         io_start.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/start.png"))); 
         io_start.setBorder(null);
@@ -835,7 +892,8 @@ public class IOPanel extends javax.swing.JPanel {
         io_start.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/start.png")));
     }                                    
 
-    public void io_startActionPerformed(java.awt.event.ActionEvent evt) {               
+    public void io_startActionPerformed(java.awt.event.ActionEvent evt) {      
+                
         System.out.println("RUN");
         temp_array = new ArrayList<Integer>();
         try(Scanner read = new Scanner(io_queue_input.getText())) {
@@ -869,7 +927,7 @@ public class IOPanel extends javax.swing.JPanel {
             }
             int [] results = new int[sequence.size() + 1];
 
-            String direction = "right";
+            
             int choose = io_algo_select.getSelectedIndex();
             // System.out.println(choose);
             switch(choose){
@@ -907,23 +965,64 @@ public class IOPanel extends javax.swing.JPanel {
                 case 2:
                 System.out.println("SCAN");
                 results = DiskAlgos.SCAN(main_queue, head, direction);
+
+                for(int i = 0; i < results.length; i++){
+                    temp_results.add(results[i]);
+                }
+
+                results = new int[temp_results.size()];
+                for(int i = 0; i < temp_results.size(); i++){
+                    results[i] = temp_results.get(i);
+                }
+
                 
                 break;
 
                 case 3:
                 System.out.println("CSCAN");
                 results = DiskAlgos.CSCAN(main_queue, head);
+                for(int i = 0; i < results.length; i++){
+                    temp_results.add(results[i]);
+                }
+
+                results = new int[temp_results.size()];
+                for(int i = 0; i < temp_results.size(); i++){
+                    results[i] = temp_results.get(i);
+                }
                 break;
 
                 case 4:
                 System.out.println("LOOK");
                 results = DiskAlgos.LOOK(main_queue, head, direction);
+
+                for(int i = 0; i < results.length; i++){
+                    temp_results.add(results[i]);
+                }
+
+                results = new int[temp_results.size()];
+                for(int i = 0; i < temp_results.size(); i++){
+                    results[i] = temp_results.get(i);
+                }
+                
+
                 break;
 
                 case 5:
                 System.out.println("CLOOK");
                 results = DiskAlgos.CLOOK(main_queue, head);
+
+                for(int i = 0; i < results.length; i++){
+                    temp_results.add(results[i]);
+                }
+
+                results = new int[temp_results.size()];
+                for(int i = 0; i < temp_results.size(); i++){
+                    results[i] = temp_results.get(i);
+                }
+                
                 System.out.println(results);
+
+
                 break;
             }
             
@@ -961,6 +1060,7 @@ public class IOPanel extends javax.swing.JPanel {
 
             
         } catch (Exception e) {
+            System.out.println("ERROR IN ALGO");
             // TODO: handle exception
         }
         Music.sfx();
@@ -1059,4 +1159,6 @@ public class IOPanel extends javax.swing.JPanel {
     public javax.swing.JButton minimize;             
     public ArrayList<Integer> import_ArrayList;
     public NumberLineDrawing numberline;
+    public javax.swing.JButton io_left_button;
+    public javax.swing.JButton io_right_button;
 }

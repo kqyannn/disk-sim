@@ -524,7 +524,7 @@ public static int[] CLOOK(int arr[], int head)
 public static void main(String[] args)
 {
     // request array
-    int arr[] = {82,170,43,140,24,16,190};
+    int arr[] = {82, 170, 43, 140, 24, 16, 190};
     int head = 50;
     System.out.println("Head at :"+head);
     String direction = "left";
@@ -535,7 +535,7 @@ public static void main(String[] args)
     System.out.println("----SSTF----");
     SSTF(arr, head);
     // add space
-    System.out.println("----SCAB-----");
+    System.out.println("----SCAN-----");
     SCAN(arr,head,direction);
     // add space
     System.out.println("----CSCAN----");
