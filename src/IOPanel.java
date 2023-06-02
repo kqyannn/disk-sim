@@ -11,14 +11,23 @@ import java.util.Scanner;
 import javax.swing.Action;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import org.w3c.dom.events.Event;
 
 public class IOPanel extends javax.swing.JPanel {
     public IOPanel() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
         initComponents();
     }
     String direction = "left";
@@ -919,7 +928,8 @@ public class IOPanel extends javax.swing.JPanel {
         io_start.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/start.png")));
     }                                    
 
-    public void io_startActionPerformed(java.awt.event.ActionEvent evt) {      
+    public void io_startActionPerformed(java.awt.event.ActionEvent evt) {
+
                 
         System.out.println("RUN");
         temp_array = new ArrayList<Integer>();
@@ -953,6 +963,14 @@ public class IOPanel extends javax.swing.JPanel {
                 sequence.add(main_queue[i]);
             }
             int [] results = new int[sequence.size() + 1];
+
+            System.out.println("SIZE IS " + main_queue.length);
+
+            if(main_queue.length > 40){
+                JOptionPane.showMessageDialog(null, "Invalid Input",
+      "Input Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
             
             int choose = io_algo_select.getSelectedIndex();

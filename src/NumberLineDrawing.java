@@ -156,7 +156,7 @@ public class NumberLineDrawing extends JPanel {
                        
                 g2d.drawLine(startX, startY, nextX, nextY);
                 g2d.fillOval(startX-6, startY-6, 12, 12);
-                g2d.drawString(String.valueOf(number), nextX, nextY + 20);
+                g2d.drawString(String.valueOf(number), nextX + 10, nextY + 20);
                 startX = nextX;
                 startY = nextY;
                 
