@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 import javax.swing.Action;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
@@ -344,6 +345,12 @@ public class IOPanel extends javax.swing.JPanel {
 
         io_left_button.setBounds(560, 140, 59, 20);
         io_right_button.setBounds(560 + 55 + 8, 140, 59, 20);
+
+        JLabel scan_look = new JLabel();
+        scan_look.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); 
+        scan_look.setText("(for Scan and Look)");
+        scan_look.setBounds(560 + 55 + 8 + 70, 140, 300, 20);
+        add(scan_look);
 
         // io_left_button.addMouseListener(new java.awt.event.MouseAdapter() {
         //     public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -1064,6 +1071,7 @@ public class IOPanel extends javax.swing.JPanel {
             
            
             numberline.setPreferredSize(new Dimension(920, main_queue.length * 100));
+            
             // numberline.setBounds(getX(), getY(), 200, 200);
             // io_output_panel.add(numberline);
             // io_output_panel_scroll.add(numberline);
@@ -1074,8 +1082,8 @@ public class IOPanel extends javax.swing.JPanel {
             // scrollPane.setBounds(100,100,numberline.true_width, 330);
             // scrollPane.setBackground(Color.red);
             // add(scrollPane);
-            io_output_panel_scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-            io_output_panel_scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+            // io_output_panel_scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+            // io_output_panel_scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
            io_output_panel_scroll.setViewportView(numberline);
 
            System.out.println("Total Distance: " + DiskAlgos.getTotal_distance());

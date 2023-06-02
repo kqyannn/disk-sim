@@ -8,7 +8,7 @@ public class NumberLineDrawing extends JPanel {
     public int[] results;
     public int head;
     private ArrayList<Integer> sequence;
-    final int true_width = 940;
+    final int true_width = 990;
    
 
     public NumberLineDrawing(int start, int end, ArrayList<Integer> sequence, int[] results, int head, Double timer_speed) {
@@ -49,7 +49,8 @@ public class NumberLineDrawing extends JPanel {
 
         // Draw zero line
         g2d.setStroke(new BasicStroke(3));
-        g2d.drawLine(0, height / 2, width, height / 2);
+        g2d.setFont(new java.awt.Font("Poppins ExtraBold", 0, 12)); 
+        g2d.drawLine(0, height / 2, 910, height / 2);
 
        
 
@@ -61,7 +62,7 @@ public class NumberLineDrawing extends JPanel {
 
         // Plot the sequence on the number line
         int sequenceSize = sequence.size();
-        int sequenceMarkerSize = 8;
+        int sequenceMarkerSize = 12;
 
         
 
@@ -73,13 +74,13 @@ public class NumberLineDrawing extends JPanel {
 
             int x = (number - start) * tickInterval;
             System.out.println(start);
-            x = x + 10;
+            x = x + 50;
             g2d.drawLine(x, height / 2 - 10, x, height / 2 + 10); // ticks
             // Adjust y position to avoid overlapping with tick marks
             int y = height / 2 - 10 - sequenceMarkerSize;
            
 
-            g2d.setColor(Color.RED);
+            g2d.setColor(new Color(95, 179, 255));
             g2d.fillOval(x - sequenceMarkerSize / 2, y, sequenceMarkerSize, sequenceMarkerSize);
             g2d.setColor(Color.BLACK);
             g2d.drawString(String.valueOf(number), x - 5, y - 5);
@@ -88,13 +89,13 @@ public class NumberLineDrawing extends JPanel {
 
             x = (number - start) * tickInterval;
             System.out.println(start);
-            x = x + 10;
+            x = x + 50;
             g2d.drawLine(x, height / 2 - 10, x, height / 2 + 10); // ticks
             // Adjust y position to avoid overlapping with tick marks
             y = height / 2 - 10 - sequenceMarkerSize;
            
-
-            g2d.setColor(Color.RED);
+            
+            g2d.setColor(new Color(95, 179, 255));
             g2d.fillOval(x - sequenceMarkerSize / 2, y, sequenceMarkerSize, sequenceMarkerSize);
             g2d.setColor(Color.BLACK);
             g2d.drawString(String.valueOf(number), x - 5, y - 5);
@@ -105,13 +106,13 @@ public class NumberLineDrawing extends JPanel {
 
             int x = (number - start) * tickInterval;
             System.out.println(start);
-            x = x + 10;
+            x = x + 50;
             g2d.drawLine(x, height / 2 - 10, x, height / 2 + 10); // ticks
             // Adjust y position to avoid overlapping with tick marks
             int y = height / 2 - 10 - sequenceMarkerSize;
            
 
-            g2d.setColor(Color.RED);
+            g2d.setColor(new Color(95, 179, 255));
             g2d.fillOval(x - sequenceMarkerSize / 2, y, sequenceMarkerSize, sequenceMarkerSize);
             g2d.setColor(Color.BLACK);
             g2d.drawString(String.valueOf(number), x - 5, y - 5);
@@ -132,7 +133,7 @@ public class NumberLineDrawing extends JPanel {
         // int newX = 0;
         int nextY = 0;
         int startX = (number - 0) * ticks;
-        startX = startX + 10;
+        startX = startX + 50;
         // startY = 50;
        
         for(int i = 0; i < results.length; i++){
@@ -147,7 +148,7 @@ public class NumberLineDrawing extends JPanel {
 
             int nextX = (results[i] - 0) * ticks;
             nextY = nextY + 50;
-            nextX = nextX + 10;
+            nextX = nextX + 50;
             
             
 
