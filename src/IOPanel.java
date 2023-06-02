@@ -923,6 +923,7 @@ public class IOPanel extends javax.swing.JPanel {
                 case 5:
                 System.out.println("CLOOK");
                 results = DiskAlgos.CLOOK(main_queue, head);
+                System.out.println(results);
                 break;
             }
             
@@ -939,7 +940,7 @@ public class IOPanel extends javax.swing.JPanel {
             // for(int i = 0; i < array.length; i++){
             //     sequence.add(array[i]);
             // }
-            numberline = new NumberLineDrawing(start, end, sequence, results, head);
+            numberline = new NumberLineDrawing(start, end, sequence, results, head, speed);
             // numberline.setAutoscrolls(true);
             
            

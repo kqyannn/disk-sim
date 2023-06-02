@@ -11,7 +11,7 @@ public class NumberLineDrawing extends JPanel {
     final int true_width = 940;
    
 
-    public NumberLineDrawing(int start, int end, ArrayList<Integer> sequence, int[] results, int head) {
+    public NumberLineDrawing(int start, int end, ArrayList<Integer> sequence, int[] results, int head, Double timer_speed) {
         this.start = start;
         this.end = end;
         this.sequence = sequence;
@@ -173,6 +173,7 @@ public class NumberLineDrawing extends JPanel {
     }
 
     public static void main(String[] args) {
+        double timer = 2;
         Scanner scanner = new Scanner(System.in);
 
         // System.out.print("Enter the start value: ");
@@ -201,7 +202,7 @@ public class NumberLineDrawing extends JPanel {
             frame.setSize(1080, 720);
             frame.setLocationRelativeTo(null);
 
-            NumberLineDrawing numberLineDrawing = new NumberLineDrawing(start, end, sequence, results, head);
+            NumberLineDrawing numberLineDrawing = new NumberLineDrawing(start, end, sequence, results, head, timer);
             frame.add(numberLineDrawing);
 
             frame.setVisible(true);

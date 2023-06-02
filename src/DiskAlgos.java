@@ -515,8 +515,9 @@ public static int[] CLOOK(int arr[], int head)
     }
     sequence = seek_sequence.stream().mapToInt(i->i).toArray();
     setTotal_distance(seek_count);
-
     return sequence;
+
+  
 }
  
 // Driver code
