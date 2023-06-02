@@ -5,6 +5,7 @@ import java.util.Vector;
 class DiskAlgos
 {
 
+static int seek = 0;
 // static int size = 8;
 static int disk_size = 200;
 static int[] sequence;
@@ -65,7 +66,7 @@ static int[] FCFS(int arr[], int head)
     }
     sequence = arr.clone();
     setTotal_distance(seek_count);
-
+    // seek = seek_count;
     return sequence;
 }
 
@@ -146,6 +147,7 @@ static int[] FCFS(int arr[], int head)
         sequence = seek_sequence.clone();
 
         setTotal_distance(seek_count);
+        seek = seek_count;
         return sequence;
     }
 
@@ -237,7 +239,7 @@ static int[] SCAN(int arr[], int head, String direction)
         System.out.print(seek_sequence.get(i) + "\n");
     }
     sequence = seek_sequence.stream().mapToInt(i->i).toArray();
-
+    seek = seek_count;
     return sequence;
 
 }
@@ -330,7 +332,7 @@ public static int[] CSCAN(int arr[], int head)
         }
         sequence = seek_sequence.stream().mapToInt(i->i).toArray();
         setTotal_distance(seek_count);
-
+        seek = seek_count;
         return sequence;
     }
 

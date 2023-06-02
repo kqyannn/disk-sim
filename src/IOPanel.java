@@ -20,7 +20,7 @@ public class IOPanel extends javax.swing.JPanel {
     public IOPanel() {
         initComponents();
     }
-    String direction = "right";
+    String direction = "left";
     int selected;
     double speed;
     final int cylinder_line = 199;
@@ -41,6 +41,7 @@ public class IOPanel extends javax.swing.JPanel {
         
         speed = 1;
         
+        seek_label = new javax.swing.JLabel();
         io_left_button = new javax.swing.JButton();
         io_right_button = new javax.swing.JButton();
         exit = new javax.swing.JButton();
@@ -82,6 +83,11 @@ public class IOPanel extends javax.swing.JPanel {
         io_timer_bg = new javax.swing.JLabel();
         io_speed_bg = new javax.swing.JLabel();
         io_bg = new javax.swing.JLabel();
+
+
+      
+
+        
 
         setEnabled(false);
         setPreferredSize(new java.awt.Dimension(1080, 720));
@@ -325,8 +331,8 @@ public class IOPanel extends javax.swing.JPanel {
         io_backpanel.add(io_import);
         io_import.setBounds(550, 90, 130, 40);
 
-        io_left_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/left.png"))); 
-        io_right_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/right_after.png"))); 
+        io_left_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/left_after.png"))); 
+        io_right_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/right.png"))); 
         
         io_left_button.setBorder(null);
         io_left_button.setBorderPainted(false);
@@ -611,6 +617,15 @@ public class IOPanel extends javax.swing.JPanel {
         io_backpanel.add(io_timer_label);
         io_timer_label.setBounds(940, 190, 70, 30);
 
+        seek_label.setFont(new java.awt.Font("Poppins ExtraBold", 0, 20)); 
+        // seek_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        seek_label.setText("Seek Time: ");
+        seek_label.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        
+        
+        seek_label.setBounds(100, 600, 300, 100);
+        add(seek_label);
+
         io_timer_bg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         io_timer_bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/timer.png"))); 
         io_timer_bg.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -631,6 +646,11 @@ public class IOPanel extends javax.swing.JPanel {
 
         add(io_backpanel);
         io_backpanel.setBounds(0, 0, 1080, 720);
+
+
+     
+
+     
     }
 
     public void set_dot(int i) {
@@ -1058,6 +1078,11 @@ public class IOPanel extends javax.swing.JPanel {
             io_output_panel_scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
            io_output_panel_scroll.setViewportView(numberline);
 
+           System.out.println("Total Distance: " + DiskAlgos.getTotal_distance());
+
+           seek_label.setText("Seek Time: " + DiskAlgos.getTotal_distance());
+           
+
             
         } catch (Exception e) {
             System.out.println("ERROR IN ALGO");
@@ -1161,4 +1186,5 @@ public class IOPanel extends javax.swing.JPanel {
     public NumberLineDrawing numberline;
     public javax.swing.JButton io_left_button;
     public javax.swing.JButton io_right_button;
+    public javax.swing.JLabel seek_label;
 }
