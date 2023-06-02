@@ -906,22 +906,23 @@ public class IOPanel extends javax.swing.JPanel {
 
                 case 2:
                 System.out.println("SCAN");
-                DiskAlgos.SCAN(main_queue, head, direction);
+                results = DiskAlgos.SCAN(main_queue, head, direction);
+                
                 break;
 
                 case 3:
                 System.out.println("CSCAN");
-                DiskAlgos.CSCAN(main_queue, head);
+                results = DiskAlgos.CSCAN(main_queue, head);
                 break;
 
                 case 4:
                 System.out.println("LOOK");
-                DiskAlgos.LOOK(main_queue, head, direction);
+                results = DiskAlgos.LOOK(main_queue, head, direction);
                 break;
 
                 case 5:
                 System.out.println("CLOOK");
-                DiskAlgos.CLOOK(main_queue, head);
+                results = DiskAlgos.CLOOK(main_queue, head);
                 break;
             }
             

@@ -149,7 +149,7 @@ static int[] FCFS(int arr[], int head)
         return sequence;
     }
 
-static void SCAN(int arr[], int head, String direction)
+static int[] SCAN(int arr[], int head, String direction)
 {
     int size = arr.length;
     int seek_count = 0;
@@ -238,9 +238,11 @@ static void SCAN(int arr[], int head, String direction)
     }
     sequence = seek_sequence.stream().mapToInt(i->i).toArray();
 
+    return sequence;
+
 }
 
-public static void CSCAN(int arr[], int head)
+public static int[] CSCAN(int arr[], int head)
     {
         int size = arr.length;
         int seek_count = 0;
@@ -328,9 +330,11 @@ public static void CSCAN(int arr[], int head)
         }
         sequence = seek_sequence.stream().mapToInt(i->i).toArray();
         setTotal_distance(seek_count);
+
+        return sequence;
     }
 
-public static void LOOK(int arr[], int head, String direction)
+public static int[] LOOK(int arr[], int head, String direction)
 {
 int size = arr.length;
 int seek_count = 0;
@@ -423,9 +427,10 @@ System.out.println(seek_sequence.get(i));
 }
 sequence = seek_sequence.stream().mapToInt(i->i).toArray();
 setTotal_distance(seek_count);
+return sequence;
 }
 
-public static void CLOOK(int arr[], int head)
+public static int[] CLOOK(int arr[], int head)
 {
     int size = arr.length;
     int seek_count = 0;
@@ -510,6 +515,8 @@ public static void CLOOK(int arr[], int head)
     }
     sequence = seek_sequence.stream().mapToInt(i->i).toArray();
     setTotal_distance(seek_count);
+
+    return sequence;
 }
  
 // Driver code
