@@ -935,8 +935,7 @@ public class IOPanel extends javax.swing.JPanel {
     }                                    
 
     public void io_startActionPerformed(java.awt.event.ActionEvent evt) {
-
-                
+        io_output_panel.removeAll();        
         System.out.println("RUN");
         temp_array = new ArrayList<Integer>();
         try(Scanner read = new Scanner(io_queue_input.getText())) {
@@ -1194,43 +1193,41 @@ public class IOPanel extends javax.swing.JPanel {
         Music.sfx();
 
         int fileNumber = 1;
+        String fileName = "temp.png";
+        saveJScrollPaneAsImage(io_output_panel_scroll, fileName);
 
-                String fileName = "output.png";
-                File file = new File(fileName);
+        String pdfPath = "output.pdf";
+        File pdf = new File(fileName);
 
-                // Check if the file already exists
-                while (file.exists()) {
-                    fileNumber++; // Increment the file number
+        while (pdf.exists()) {
+            fileNumber++; // Increment the file number
 
-                    // Generate a new file name
-                    fileName = "output" + String.format("%03d", fileNumber) + ".png";
-                    file = new File(fileName);
-                }
-                saveJScrollPaneAsImage(io_output_panel_scroll, fileName);
+            // Generate a new file name
+            fileName = "output" + String.format("%03d", fileNumber) + ".pdf";
+            pdf = new File(fileName);
+        }
 
-                String pdfPath = "output.pdf";
+        try {
+            BufferedImage bufferedImage = ImageIO.read(new File(fileName));
+            int imageWidth = bufferedImage.getWidth() + 70;
+            int imageHeight = bufferedImage.getHeight() + 70;
 
-                try {
-                    BufferedImage bufferedImage = ImageIO.read(new File(fileName));
-                    int imageWidth = bufferedImage.getWidth() + 70;
-                    int imageHeight = bufferedImage.getHeight() + 70;
+            Document document = new Document();
+            document.setPageSize(new com.itextpdf.text.Rectangle(imageWidth, imageHeight));
+            PdfWriter.getInstance(document, new FileOutputStream(pdfPath));
+            document.open();
 
-                    Document document = new Document();
-                    document.setPageSize(new com.itextpdf.text.Rectangle(imageWidth, imageHeight));
-                    PdfWriter.getInstance(document, new FileOutputStream(pdfPath));
-                    document.open();
+            Image image = Image.getInstance(bufferedImage, null);
+            document.add(image);
 
-                    Image image = Image.getInstance(bufferedImage, null);
-                    document.add(image);
+            document.close();
+            
+            File imageFile = new File(fileName);
+            imageFile.delete();
 
-                    document.close();
-                    
-                    File imageFile = new File(fileName);
-                    imageFile.delete();
-
-                } catch (IOException | DocumentException e) {
-                    e.printStackTrace();
-                }
+        } catch (IOException | DocumentException e) {
+            e.printStackTrace();
+        }
     }                                           
 
     public void io_return_panelMouseEntered(java.awt.event.MouseEvent evt) {                                             
