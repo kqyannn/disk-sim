@@ -4,14 +4,22 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.PixelGrabber;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Date;
 
 import javax.imageio.ImageIO;
 import javax.swing.Action;
@@ -108,11 +116,7 @@ public class IOPanel extends javax.swing.JPanel {
         io_timer_bg = new javax.swing.JLabel();
         io_speed_bg = new javax.swing.JLabel();
         io_bg = new javax.swing.JLabel();
-
-
-      
-
-        
+        scan_look = new javax.swing.JLabel();
 
         setEnabled(false);
         setPreferredSize(new java.awt.Dimension(1080, 720));
@@ -224,13 +228,32 @@ public class IOPanel extends javax.swing.JPanel {
         io_save_panel.add(io_directory_label);
         io_directory_label.setBounds(280, 290, 350, 30);
 
-        io_directory_input.setFont(new java.awt.Font("Poppins SemiBold", 0, 18)); 
+        io_directory_input.setFont(new java.awt.Font("Poppins SemiBold", 0, 18));
+        io_directory_input.setText("C://Users/PC/directory/"); 
         io_directory_input.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         io_directory_input.setToolTipText("");
         io_directory_input.setBorder(null);
         io_directory_input.setOpaque(false);
         io_save_panel.add(io_directory_input);
         io_directory_input.setBounds(290, 330, 500, 30);
+
+        io_directory_input.setForeground(Color.GRAY);
+        io_directory_input.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (io_directory_input.getText().equals("C://Users/PC/directory/")) {
+                    io_directory_input.setText("");
+                    io_directory_input.setForeground(Color.BLACK);
+                }
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (io_directory_input.getText().isEmpty()) {
+                    io_directory_input.setForeground(Color.GRAY);
+                    io_directory_input.setText("C://Users/PC/directory/");
+                }
+            }
+            });
 
         io_directory_bg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         io_directory_bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/directory_input.png"))); 
@@ -361,7 +384,7 @@ public class IOPanel extends javax.swing.JPanel {
         io_left_button.setBounds(560, 140, 59, 20);
         io_right_button.setBounds(560 + 55 + 8, 140, 59, 20);
 
-        JLabel scan_look = new JLabel();
+        
         scan_look.setFont(new java.awt.Font("Poppins SemiBold", 0, 12)); 
         scan_look.setText("(for Scan and Look)");
         scan_look.setBounds(560 + 55 + 8 + 70, 140, 300, 20);
@@ -451,6 +474,7 @@ public class IOPanel extends javax.swing.JPanel {
 
         io_save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/io_panel/save.png"))); 
         io_save.setBorder(null);
+        io_save.setEnabled(false);
         io_save.setBorderPainted(false);
         io_save.setContentAreaFilled(false);
         io_save.setFocusPainted(false);
@@ -791,6 +815,12 @@ public class IOPanel extends javax.swing.JPanel {
     public void io_saveActionPerformed(java.awt.event.ActionEvent evt) {    
         Music.sfx();                                    
         setPanelEnabled(io_backpanel, false);
+        setPanelEnabled(io_output_panel, false);
+        io_output_panel_scroll.setVisible(false);
+        io_left_button.setEnabled(false);
+        io_right_button.setEnabled(false);
+        scan_look.setEnabled(false);
+        seek_label.setEnabled(false);
         io_save_panel.setVisible(true);
     }                                       
 
@@ -936,6 +966,7 @@ public class IOPanel extends javax.swing.JPanel {
 
     public void io_startActionPerformed(java.awt.event.ActionEvent evt) {
         io_output_panel.removeAll();        
+        io_save.setEnabled(true);
         System.out.println("RUN");
         temp_array = new ArrayList<Integer>();
         try(Scanner read = new Scanner(io_queue_input.getText())) {
@@ -1092,7 +1123,7 @@ public class IOPanel extends javax.swing.JPanel {
             numberline = new NumberLineDrawing(start, end, sequence, results, head, speed);
             // numberline.setAutoscrolls(true);
         
-            numberline.setPreferredSize(new Dimension(920, main_queue.length * 100));
+            numberline.setPreferredSize(new Dimension(920, main_queue.length * 60 + 40));
             seek_label.setText("Seek Time: " + DiskAlgos.getTotal_distance());
             
             JLabel algo = new JLabel("Algorithm: " + io_algo_select.getSelectedItem().toString(), null, SwingConstants.LEFT);
@@ -1165,20 +1196,43 @@ public class IOPanel extends javax.swing.JPanel {
 
     public void io_save_pngActionPerformed(java.awt.event.ActionEvent evt) {                                            
         Music.sfx();
-        int fileNumber = 1;
-        String fileName = "output.png";
-        System.out.println(fileName);
-        File file = new File(fileName);
+        File directory = new File(io_directory_input.getText());
+        String fileName;
 
-        // Check if the file already exists
-        while (file.exists()) {
-            fileNumber++; // Increment the file number
+        String text = io_directory_input.getText();
+        String searchText = "\\";
+        String replacementText = "/";
 
-            // Generate a new file name
-            fileName = "output" + String.format("%03d", fileNumber) + ".png";
-            file = new File(fileName);
+        // Loop until there are no more occurrences of searchText
+        while (text.contains(searchText)) {
+            // Find the index of the first occurrence of searchText
+            int index = text.indexOf(searchText);
+
+            // Replace searchText with replacementText
+            text = text.substring(0, index) + replacementText + text.substring(index + searchText.length());
         }
+        char lastCharacter = text.charAt(text.length() - 1);
+        if(lastCharacter != '/') {
+            text = text + "/";
+        }
+
+        if(directory.isDirectory() && io_directory_input.getText() != "C://Users/PC/directory/") {
+            fileName = text + getLocalTime() + ".png";
+        } else {
+            JOptionPane.showMessageDialog(DiskSim.IO, "Directory is empty/invalid. Saving to default directory."); 
+            fileName = getLocalTime() + ".png";
+        }
+        System.out.println(fileName);
         saveJScrollPaneAsImage(io_output_panel_scroll, fileName);
+
+        setPanelEnabled(io_backpanel, true);
+        setPanelEnabled(io_output_panel, true);
+        io_output_panel_scroll.setVisible(true);
+        io_left_button.setEnabled(true);
+        io_right_button.setEnabled(true);
+        scan_look.setEnabled(true);
+        seek_label.setEnabled(true);
+        io_save_panel.setVisible(false);
     }                                           
 
     public void io_save_pdfMouseEntered(java.awt.event.MouseEvent evt) {                                         
@@ -1192,22 +1246,37 @@ public class IOPanel extends javax.swing.JPanel {
     public void io_save_pdfActionPerformed(java.awt.event.ActionEvent evt) {                                            
         Music.sfx();
 
-        int fileNumber = 1;
         String fileName = "temp.png";
         saveJScrollPaneAsImage(io_output_panel_scroll, fileName);
 
-        String pdfPath = "output.pdf";
-        File pdf = new File(fileName);
+        File directory = new File(io_directory_input.getText());
+        String pdfPath;
 
-        while (pdf.exists()) {
-            fileNumber++; // Increment the file number
+        String text = io_directory_input.getText();
+        String searchText = "\\";
+        String replacementText = "/";
 
-            // Generate a new file name
-            fileName = "output" + String.format("%03d", fileNumber) + ".pdf";
-            pdf = new File(fileName);
+        // Loop until there are no more occurrences of searchText
+        while (text.contains(searchText)) {
+            // Find the index of the first occurrence of searchText
+            int index = text.indexOf(searchText);
+
+            // Replace searchText with replacementText
+            text = text.substring(0, index) + replacementText + text.substring(index + searchText.length());
+        }
+        char lastCharacter = text.charAt(text.length() - 1);
+        if(lastCharacter != '/') {
+            text = text + "/";
         }
 
-        try {
+        if(directory.isDirectory() && io_directory_input.getText() != "C://Users/PC/directory/") {
+            pdfPath = text + getLocalTime() + ".pdf";
+        } else {
+            JOptionPane.showMessageDialog(DiskSim.IO, "Directory is empty/invalid. Saving to default directory."); 
+            pdfPath = getLocalTime() + ".pdf";
+        }
+
+        try {   
             BufferedImage bufferedImage = ImageIO.read(new File(fileName));
             int imageWidth = bufferedImage.getWidth() + 70;
             int imageHeight = bufferedImage.getHeight() + 70;
@@ -1228,6 +1297,15 @@ public class IOPanel extends javax.swing.JPanel {
         } catch (IOException | DocumentException e) {
             e.printStackTrace();
         }
+
+        setPanelEnabled(io_backpanel, true);
+        setPanelEnabled(io_output_panel, true);
+        io_output_panel_scroll.setVisible(true);
+        io_left_button.setEnabled(true);
+        io_right_button.setEnabled(true);
+        scan_look.setEnabled(true);
+        seek_label.setEnabled(true);
+        io_save_panel.setVisible(false);
     }                                           
 
     public void io_return_panelMouseEntered(java.awt.event.MouseEvent evt) {                                             
@@ -1241,6 +1319,12 @@ public class IOPanel extends javax.swing.JPanel {
     public void io_return_panelActionPerformed(java.awt.event.ActionEvent evt) {     
         Music.sfx();                                           
         setPanelEnabled(io_backpanel, true);
+        setPanelEnabled(io_output_panel, true);
+        io_output_panel_scroll.setVisible(true);
+        io_left_button.setEnabled(true);
+        io_right_button.setEnabled(true);
+        scan_look.setEnabled(true);
+        seek_label.setEnabled(true);
         io_save_panel.setVisible(false);
     }                                               
 
@@ -1253,6 +1337,23 @@ public class IOPanel extends javax.swing.JPanel {
                 setPanelEnabled((javax.swing.JPanel) component, isEnabled);
             component.setEnabled(isEnabled);
         }
+    }
+
+    private static String getLocalTime() {
+        LocalDate currentDate = LocalDate.now();
+
+        // Get the current time
+        LocalTime currentTime = LocalTime.now();
+
+        // Define the desired date and time formats
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMddyy");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hhmmss");
+
+        // Format the current date and time
+        String formattedDate = currentDate.format(dateFormatter);
+        String formattedTime = currentTime.format(timeFormatter);
+
+        return formattedDate + "_" + formattedTime + "_DS";
     }
 
     private static void saveJScrollPaneAsImage(JScrollPane scrollPane, String filename) {
@@ -1327,4 +1428,5 @@ public class IOPanel extends javax.swing.JPanel {
     public javax.swing.JButton io_left_button;
     public javax.swing.JButton io_right_button;
     public javax.swing.JLabel seek_label;
+    public javax.swing.JLabel scan_look;
 }
