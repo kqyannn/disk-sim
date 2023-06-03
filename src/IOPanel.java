@@ -1,14 +1,23 @@
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
 import java.awt.image.PixelGrabber;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.imageio.ImageIO;
 import javax.swing.Action;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -17,8 +26,14 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.w3c.dom.events.Event;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.pdf.PdfWriter;
 
 public class IOPanel extends javax.swing.JPanel {
     public IOPanel() {
@@ -255,24 +270,15 @@ public class IOPanel extends javax.swing.JPanel {
         io_backpanel.setPreferredSize(new java.awt.Dimension(1080, 720));
         io_backpanel.setLayout(null);
 
+        io_backpanel.setPreferredSize(new java.awt.Dimension(1080, 720));
+        io_backpanel.setLayout(null);
+
         io_output_panel_scroll.setBackground(new java.awt.Color(255, 255, 255));
+        io_output_panel_scroll.getViewport().setBackground(new java.awt.Color(255, 255, 255));
         io_output_panel_scroll.setBorder(null);
 
         io_output_panel.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout io_output_panelLayout = new javax.swing.GroupLayout(io_output_panel);
-        io_output_panel.setLayout(io_output_panelLayout);
-        io_output_panelLayout.setHorizontalGroup(
-            io_output_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 940, Short.MAX_VALUE)
-        );
-        io_output_panelLayout.setVerticalGroup(
-            io_output_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 330, Short.MAX_VALUE)
-        );
-
-
-
+        io_output_panel.setLayout(null);
         io_output_panel_scroll.setViewportView(io_output_panel);
 
         io_backpanel.add(io_output_panel_scroll);
@@ -1086,12 +1092,44 @@ public class IOPanel extends javax.swing.JPanel {
             // }
             numberline = new NumberLineDrawing(start, end, sequence, results, head, speed);
             // numberline.setAutoscrolls(true);
-            
-           
+        
             numberline.setPreferredSize(new Dimension(920, main_queue.length * 100));
+            seek_label.setText("Seek Time: " + DiskAlgos.getTotal_distance());
+            
+            JLabel algo = new JLabel("Algorithm: " + io_algo_select.getSelectedItem().toString(), null, SwingConstants.LEFT);
+            algo.setBackground(new java.awt.Color(255, 255, 255));
+            algo.setFont(new java.awt.Font("Poppins SemiBold", 0, 16));
+            algo.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+            JLabel head_position = new JLabel("Head starting position: " + io_position_input.getText(), null, SwingConstants.LEFT);
+            head_position.setBackground(new java.awt.Color(255, 255, 255));
+            head_position.setFont(new java.awt.Font("Poppins SemiBold", 0, 16));
+            head_position.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+            JLabel queue = new JLabel("Queue: " + io_queue_input.getText(), null, SwingConstants.LEFT);
+            queue.setBackground(new java.awt.Color(255, 255, 255));
+            queue.setFont(new java.awt.Font("Poppins SemiBold", 0, 16));
+            queue.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+            JLabel seek_time = new JLabel("Seek Time: " + seek_label.getText(), null, SwingConstants.LEFT);
+            seek_time.setBackground(new java.awt.Color(255, 255, 255));
+            seek_time.setFont(new java.awt.Font("Poppins SemiBold", 0, 16));
+            seek_time.setAlignmentX(Component.LEFT_ALIGNMENT);
             
             // numberline.setBounds(getX(), getY(), 200, 200);
-            // io_output_panel.add(numberline);
+            Box box = Box.createVerticalBox();
+            box.setBackground(new java.awt.Color(255, 255, 255));
+            box.setAlignmentX(Component.LEFT_ALIGNMENT);
+            box.add(algo);
+            box.add(head_position);
+            box.add(queue);
+            box.add(seek_time);
+            box.add(numberline);
+            io_output_panel.add(box);
+
+            io_output_panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+            io_output_panel.setLayout(new BoxLayout(io_output_panel, BoxLayout.Y_AXIS));
+            io_output_panel.setBackground(new java.awt.Color(255, 255, 255));
             // io_output_panel_scroll.add(numberline);
             // io_output_panel_scroll.setViewportView(numberline);
             // numberline.setBackground(Color.red);
@@ -1102,11 +1140,11 @@ public class IOPanel extends javax.swing.JPanel {
             // add(scrollPane);
             // io_output_panel_scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
             // io_output_panel_scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-           io_output_panel_scroll.setViewportView(numberline);
+           io_output_panel_scroll.setViewportView(io_output_panel);
 
            System.out.println("Total Distance: " + DiskAlgos.getTotal_distance());
 
-           seek_label.setText("Seek Time: " + DiskAlgos.getTotal_distance());
+           
            
 
             
@@ -1128,7 +1166,20 @@ public class IOPanel extends javax.swing.JPanel {
 
     public void io_save_pngActionPerformed(java.awt.event.ActionEvent evt) {                                            
         Music.sfx();
+        int fileNumber = 1;
+        String fileName = "output.png";
+        System.out.println(fileName);
+        File file = new File(fileName);
 
+        // Check if the file already exists
+        while (file.exists()) {
+            fileNumber++; // Increment the file number
+
+            // Generate a new file name
+            fileName = "output" + String.format("%03d", fileNumber) + ".png";
+            file = new File(fileName);
+        }
+        saveJScrollPaneAsImage(io_output_panel_scroll, fileName);
     }                                           
 
     public void io_save_pdfMouseEntered(java.awt.event.MouseEvent evt) {                                         
@@ -1142,6 +1193,44 @@ public class IOPanel extends javax.swing.JPanel {
     public void io_save_pdfActionPerformed(java.awt.event.ActionEvent evt) {                                            
         Music.sfx();
 
+        int fileNumber = 1;
+
+                String fileName = "output.png";
+                File file = new File(fileName);
+
+                // Check if the file already exists
+                while (file.exists()) {
+                    fileNumber++; // Increment the file number
+
+                    // Generate a new file name
+                    fileName = "output" + String.format("%03d", fileNumber) + ".png";
+                    file = new File(fileName);
+                }
+                saveJScrollPaneAsImage(io_output_panel_scroll, fileName);
+
+                String pdfPath = "output.pdf";
+
+                try {
+                    BufferedImage bufferedImage = ImageIO.read(new File(fileName));
+                    int imageWidth = bufferedImage.getWidth() + 70;
+                    int imageHeight = bufferedImage.getHeight() + 70;
+
+                    Document document = new Document();
+                    document.setPageSize(new com.itextpdf.text.Rectangle(imageWidth, imageHeight));
+                    PdfWriter.getInstance(document, new FileOutputStream(pdfPath));
+                    document.open();
+
+                    Image image = Image.getInstance(bufferedImage, null);
+                    document.add(image);
+
+                    document.close();
+                    
+                    File imageFile = new File(fileName);
+                    imageFile.delete();
+
+                } catch (IOException | DocumentException e) {
+                    e.printStackTrace();
+                }
     }                                           
 
     public void io_return_panelMouseEntered(java.awt.event.MouseEvent evt) {                                             
@@ -1166,6 +1255,34 @@ public class IOPanel extends javax.swing.JPanel {
             if (component instanceof javax.swing.JPanel)
                 setPanelEnabled((javax.swing.JPanel) component, isEnabled);
             component.setEnabled(isEnabled);
+        }
+    }
+
+    private static void saveJScrollPaneAsImage(JScrollPane scrollPane, String filename) {
+        // Get the panel or component contained in the JScrollPane
+        JComponent component = (JComponent) scrollPane.getViewport().getView();
+
+        // Get the size of the panel or component
+        Dimension size = component.getSize();
+
+        // Create a BufferedImage with the size of the panel or component
+        BufferedImage image = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_RGB);
+
+        // Create a Graphics2D object from the image
+        Graphics2D graphics = image.createGraphics();
+
+        // Paint the panel or component onto the image
+        component.paint(graphics);
+
+        // Dispose the graphics object
+        graphics.dispose();
+
+        // Save the image to a file
+        try {
+            ImageIO.write(image, "png", new File(filename));
+            
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
                  
