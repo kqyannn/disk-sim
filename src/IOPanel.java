@@ -1171,6 +1171,10 @@ public class IOPanel extends javax.swing.JPanel {
             
         } catch (Exception e) {
             System.out.println("ERROR IN ALGO");
+            JOptionPane.showMessageDialog(null, "Invalid Input",
+      "Input Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            
             // TODO: handle exception
         }
         Music.sfx();
