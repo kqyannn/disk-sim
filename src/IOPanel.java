@@ -2,20 +2,25 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.font.NumericShaper;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
+import javax.swing.Timer;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
+import javax.swing.Timer;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -24,6 +29,7 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -64,7 +70,7 @@ public class IOPanel extends javax.swing.JPanel {
     public void initComponents() {
         
         speed = 1;
-        
+        // timer = new javax.swing.Timer();
         seek_label = new javax.swing.JLabel();
         io_left_button = new javax.swing.JButton();
         io_right_button = new javax.swing.JButton();
@@ -956,6 +962,9 @@ public class IOPanel extends javax.swing.JPanel {
     }                                    
 
     public void io_startActionPerformed(java.awt.event.ActionEvent evt) {
+
+        count = 0;
+        
         io_output_panel.removeAll();        
         io_save.setEnabled(true);
         System.out.println("RUN");
@@ -1098,11 +1107,14 @@ public class IOPanel extends javax.swing.JPanel {
                 break;
             }
             
+            
 
             int start = 0;
 
             // System.out.print("Enter the end value: ");
             int end = 199;
+
+            final int[] staticResults = results.clone();
     
             // ArrayList<Integer> sequence = new ArrayList<>();
             // int[] array = {53,98,183,37,122,14,124,65,67};
@@ -1110,9 +1122,35 @@ public class IOPanel extends javax.swing.JPanel {
             // int[] results = {53,98,183,37,122,14,124,65,67};
             // for(int i = 0; i < array.length; i++){
             //     sequence.add(array[i]);
-            // }
-            numberline = new NumberLineDrawing(start, end, sequence, results, head, speed);
-            // numberline.setAutoscrolls(true);
+            //
+
+           
+            // numberline = new NumberLineDrawing(start, end, sequence, results, head, speed);
+            
+            timer = new Timer((int) (500/speed), new ActionListener(){
+                
+                
+                @Override
+                public void actionPerformed(ActionEvent evt){
+                    System.out.println("I am in");
+                   
+                    final int[] newResults = Arrays.copyOfRange(staticResults,0,count+1);
+                    for(int num = 0; num < newResults.length; num++){
+                        System.out.println(newResults[num]);
+                    }
+                    
+                    numberline = new NumberLineDrawing(start, end, sequence, newResults, head, speed);
+                    // numberline.repaint();
+                    if(count < staticResults.length){
+                        count++;
+                    }
+                    else{
+                        timer.stop();
+                    }
+         
+
+            
+            numberline.setAutoscrolls(true);
         
             numberline.setPreferredSize(new Dimension(920, main_queue.length * 60 + 40));
             seek_label.setText("Seek Time: " + DiskAlgos.getTotal_distance());
@@ -1146,6 +1184,9 @@ public class IOPanel extends javax.swing.JPanel {
             box.add(queue);
             box.add(seek_time);
             box.add(numberline);
+            // Rectangle bounds = io_output_panel.getBounds();
+            io_output_panel = new JPanel(); // crazy clearing mechansim for canvas
+
             io_output_panel.add(box);
 
             io_output_panel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -1161,9 +1202,30 @@ public class IOPanel extends javax.swing.JPanel {
             // add(scrollPane);
             // io_output_panel_scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
             // io_output_panel_scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+
+        
            io_output_panel_scroll.setViewportView(io_output_panel);
 
+           if(count >= staticResults.length){
+            timer.stop();
+           }
+
+        }
+                
+    });
+    if(!timer.isRunning()){
+        timer.start();
+    }
+       
+
+
+
            System.out.println("Total Distance: " + DiskAlgos.getTotal_distance());
+           
+           System.out.println("size of sequence: " + sequence.size());
+           System.out.println("size of results: " + results.length);
+
 
            
            
@@ -1171,7 +1233,7 @@ public class IOPanel extends javax.swing.JPanel {
             
         } catch (Exception e) {
             System.out.println("ERROR IN ALGO");
-            JOptionPane.showMessageDialog(null, "Invalid Input",
+            JOptionPane.showMessageDialog(null, "Invalid Input: " + e,
       "Input Error", JOptionPane.ERROR_MESSAGE);
                 return;
             
@@ -1424,4 +1486,7 @@ public class IOPanel extends javax.swing.JPanel {
     public javax.swing.JButton io_right_button;
     public javax.swing.JLabel seek_label;
     public javax.swing.JLabel scan_look;
+    public int[] results;
+    public Timer timer;
+    public int count = 0;
 }

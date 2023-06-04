@@ -1,8 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
-
+import javax.swing.Timer;
 public class NumberLineDrawing extends JPanel {
+
+   
     private int start;
     private int end;
     public int[] results;
@@ -64,7 +68,7 @@ public class NumberLineDrawing extends JPanel {
         int sequenceSize = sequence.size();
         int sequenceMarkerSize = 12;
 
-        
+        Timer timer;
 
         for (int i = 0; i < sequenceSize; i++) {
 
@@ -116,60 +120,72 @@ public class NumberLineDrawing extends JPanel {
             g2d.fillOval(x - sequenceMarkerSize / 2, y, sequenceMarkerSize, sequenceMarkerSize);
             g2d.setColor(Color.BLACK);
             g2d.drawString(String.valueOf(number), x - 5, y - 5);
+           
+
+            //  timer = new Timer(1000, new ActionListener() {
+            //     public void actionPerformed(ActionEvent evt){
+            //         lineWriter(g2d, head, i);
+            //         }
+            //     }
+         
+            // );
+            // timer.start();
             
         }
         lineWriter(g2d, head);
-
-        
-       
+      
+   
     }
     public void lineWriter(Graphics g2d, int head) {
+        
+        // int count = 0;
 
+        // timer = new Timer(1000, new ActionListener() {
+        //     public void actionPerformed(ActionEvent evt){
+                
+        //     }
+        // }
+        // //the timer an for loop aadto ha ubos
+        // //shann join discord, join 
+         
+
+        // );
+        
+        
         int length = Math.abs(start) + Math.abs(end) + 1;
         int width = true_width;
         int ticks = width / length;
         int number = head;
+        final int START_NUM = 0;
+        final int OFFSET = 50;
+        int startX = (number - START_NUM) * ticks;
+        startX = startX + OFFSET;
         int startY = 50;
-        // int newX = 0;
         int nextY = 0;
-        int startX = (number - 0) * ticks;
-        startX = startX + 50;
-        // startY = 50;
        
+        //for loop
         for(int i = 0; i < results.length; i++){
             if(i == 0){
                 number = head;
-            }
+                }
             else{
                 number = results[i];
             }
-            
-    
 
-            int nextX = (results[i] - 0) * ticks;
+            int nextX = (results[i]) * ticks;
+            
             nextY = nextY + 50;
             nextX = nextX + 50;
-            
-            
-
-               
-                       
-                g2d.drawLine(startX, startY, nextX, nextY);
-                g2d.fillOval(startX-6, startY-6, 12, 12);
-                g2d.drawString(String.valueOf(number), nextX + 10, nextY + 20);
+  
+                g2d.drawLine(startX, startY, nextX, nextY);  // line between two dots
+                g2d.fillOval(startX-6, startY-6, 12, 12); // dot
+                g2d.drawString(String.valueOf(number), nextX + 10, nextY + 20); //label
                 startX = nextX;
                 startY = nextY;
                 
-             
-                // y = y + 50;
-                
-           
-            
-
-
         }
+
         g2d.fillOval(startX-6, startY-6, 12, 12);
-        
         
     }
 
@@ -185,18 +201,12 @@ public class NumberLineDrawing extends JPanel {
 
         ArrayList<Integer> sequence = new ArrayList<>();
         int[] array = {53,98,183,37,122,14,124,65,67};
-        int head = 53;
-        int[] results = {53,183,98,183,37,14,124,65,67};
+        int head = 37;
+        int[] results = {37,53,183,98,183,14,124,65,67};
         for(int i = 0; i < array.length; i++){
             sequence.add(array[i]);
         }
         
-
-    
-        
-        
-        
-
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Number Line Drawing");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -210,5 +220,34 @@ public class NumberLineDrawing extends JPanel {
         });
 
         scanner.close();
+ 
     }
+
+    public Timer timer;
 }
+
+
+// for(int i = 0; i < results.length; i++){
+//     if(i == 0){
+//         number = head;
+//     }
+//     else{
+//         number = results[i];
+//     }
+    
+
+//     int nextX = (results[i]) * ticks;
+//     nextY = nextY + 50;
+//     nextX = nextX + 50;
+
+//         g2d.drawLine(startX, startY, nextX, nextY);
+//         g2d.fillOval(startX-6, startY-6, 12, 12);
+//         g2d.drawString(String.valueOf(number), nextX + 10, nextY + 20);
+//         startX = nextX;
+//         startY = nextY;
+        
+     
+//         // y = y + 50;
+        
+// }
+// g2d.fillOval(startX-6, startY-6, 12, 12);
