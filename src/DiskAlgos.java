@@ -396,7 +396,8 @@ public static int[] CLOOK(int arr[], int head)
     {
         if (arr[i] < head)
             left.add(arr[i]);
-        if (arr[i] > head)
+        // right bias for number in head
+        if (arr[i] >= head)
             right.add(arr[i]);
     }
    
@@ -429,8 +430,10 @@ public static int[] CLOOK(int arr[], int head)
     // jump to the last track that
     // is needed to be serviced in
     // left direction
-    seek_count += Math.abs(head - left.get(0));
-    head = left.get(0);
+    if(left.size() > 0){
+        seek_count += Math.abs(head - left.get(0));
+        head = left.get(0);
+    }
    
     // Now service the requests again
     // which are left
@@ -451,20 +454,18 @@ public static int[] CLOOK(int arr[], int head)
         // Accessed track is now the new head
         head = cur_track;
     }
+
+    // code for testing
+    // for(int i = 0; i < seek_sequence.size(); i++){
+    //    System.out.println(seek_sequence.get(i));
+    //}
      
-    System.out.println("Total number of seek " +
-                       "operations = " + seek_count);
-   
-    
-   
-    for(int i = 0; i < seek_sequence.size(); i++)
-    {
-        
-    }
+    //System.out.println("Total number of seek " +
+    //                   "operations = " + seek_count);
+
     sequence = seek_sequence.stream().mapToInt(i->i).toArray();
     setTotal_distance(seek_count);
     return sequence;
-
   
 }
  
@@ -472,8 +473,8 @@ public static int[] CLOOK(int arr[], int head)
 public static void main(String[] args)
 {
     // request array
-    int arr[] = {82, 170, 43, 140, 24, 16, 190};
-    int head = 50;
+    int arr[] = {10, 20, 30, 40, 50};
+    int head = 10;
     
     String direction = "left";
     // add space
