@@ -1,6 +1,4 @@
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.Timer;
 
 public class CustomTimer extends Timer{
@@ -12,5 +10,9 @@ public class CustomTimer extends Timer{
 
     public void setCount(int cnt){
         count = cnt;
+    }
+
+    public int getCount() {
+        return count;
     }
 }

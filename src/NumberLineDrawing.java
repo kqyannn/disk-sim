@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.*;
 import javax.swing.Timer;
 public class NumberLineDrawing extends JPanel {
@@ -22,7 +20,6 @@ public class NumberLineDrawing extends JPanel {
         this.results = results;
         this.head = head;
         super.setBackground(Color.white);
-
     }
 
     @Override
