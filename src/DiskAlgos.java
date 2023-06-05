@@ -129,8 +129,7 @@ static int[] FCFS(int arr[], int head) {
         return sequence;
     }
 
-static int[] SCAN(int arr[], int head, String direction)
-{
+static int[] SCAN(int arr[], int head, String direction) {
     int size = arr.length;
     int seek_count = 0;
     int distance, cur_track;

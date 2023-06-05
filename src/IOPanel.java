@@ -1031,9 +1031,6 @@ public class IOPanel extends javax.swing.JPanel {
                     
                    
                     final int[] newResults = Arrays.copyOfRange(staticResults,0,count+1);
-                    for(int num = 0; num < newResults.length; num++){
-                        
-                    }
                     
                     numberline = new NumberLineDrawing(start, end, sequence, newResults, head, speed);
                     // numberline.repaint();
@@ -1067,7 +1064,7 @@ public class IOPanel extends javax.swing.JPanel {
                     queue.setFont(new java.awt.Font("Poppins SemiBold", 0, 16));
                     queue.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-                    JLabel seek_time = new JLabel("Seek Time: " + seek_label.getText(), null, SwingConstants.LEFT);
+                    JLabel seek_time = new JLabel(seek_label.getText(), null, SwingConstants.LEFT);
                     seek_time.setBackground(new java.awt.Color(255, 255, 255));
                     seek_time.setFont(new java.awt.Font("Poppins SemiBold", 0, 16));
                     seek_time.setAlignmentX(Component.LEFT_ALIGNMENT);
