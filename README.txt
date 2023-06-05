@@ -10,7 +10,7 @@ This program is a Disk Scheduling Algorithm Simulator developed by 3 third-year 
 ## Deployment
 
 1. (Preferably) Install the latest version of Java SDK and Java JRE. 
-2. In your console of choice, change directory to the folder where the `.jar` file or `.exe` file named Folio is located. 
+2. In your console of choice, change directory to the folder where the `.jar` file or `.exe` file named DiskSim is located. 
 3. Run the the program using the commands listed below depending if you use the `.jar` file or the `.exe` file (Windows).
 
 ### Jar File Execution
@@ -25,28 +25,27 @@ You can also run the jar and/or exe files by simply opening either of the files.
 
 ## Test Case File Format
 
-For the import file format, two parameters are needed: Queue and Head. Queue
-is the list of space separated numbers from 0 to 199, inclusive. Head is the 
-location of the disk head which can be located from 0 to 199, inclusive. It 
-is never required to have one of the queue numbers as the location of the head.
-Example of the format is found at DiskSim-Testcase.txt.
+For the import file format, two parameters are needed: Queue and Head. Queue is the list of space separated numbers from 0 to 199, inclusive. Head is the location of the disk head which can be located from 0 to 199, inclusive. It is never required to have one of the queue numbers as the location of the head. Example of the format is found at `DiskSim-Testcase.txt`.
 
 Sample example :
-
+```
 Queue: 10 20 30 40 50
 Head: 3
+```
 
 ## Export File Directory Format
 
 Based on the given template in the input bar, the format is given as
-an example: C:/Folder1/Folder2
+an example: C:/Folder1/Folder2/
+
+If the given directory is invalid, the pdf/png file will automatically saved in the default location, where the executable file is located.
 
 There are two optons: PDF to PNG format. The saved file has a default
-filename of this format: mmddyyyy-hhmmss_DS.(pdf or png)
+filename of this format: mmddyyyy-hhmmss_DS (pdf or png).
 
 Examples:
-12072020-120730_DS.pdf
-06072023-120745_DS.png
+- 12072020-120730_DS.pdf
+- 06072023-120745_DS.png
 
 ## Authors
 

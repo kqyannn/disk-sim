@@ -1104,6 +1104,7 @@ public class IOPanel extends javax.swing.JPanel {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Invalid Input: " + e, "Input Error", JOptionPane.ERROR_MESSAGE);
+            timer.stop();
             return;
         }
     }                                        
