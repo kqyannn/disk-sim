@@ -38,5 +38,5 @@ To be updated.
 
 The program requires:
 
-- [JDK 16.0.1](https://www.oracle.com/java/technologies/javase/jdk18-archive-downloads.html)
+- Atleast [JDK 16.0.1](https://www.oracle.com/java/technologies/javase/jdk18-archive-downloads.html)
 - [iTextPDF](https://github.com/itext/itextpdf/releases?after=5.5.13.2)

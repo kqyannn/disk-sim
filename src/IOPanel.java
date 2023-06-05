@@ -2,11 +2,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.image.BufferedImage;
@@ -30,7 +27,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -915,6 +911,7 @@ public class IOPanel extends javax.swing.JPanel {
 
     public void io_startActionPerformed(java.awt.event.ActionEvent evt) {
         Music.sfx();
+        io_output_panel_scroll.getVerticalScrollBar().setValue(-10);     
         count = 0;
         io_output_panel.removeAll();        
         io_save.setEnabled(true);
@@ -1084,21 +1081,22 @@ public class IOPanel extends javax.swing.JPanel {
                     box.add(queue);
                     box.add(seek_time);
                     box.add(numberline);
-                    io_output_panel_scroll.getVerticalScrollBar().setValue(io_output_panel_scroll.getVerticalScrollBar().getValue());
+                    
                     io_output_panel = new JPanel(); // crazy clearing mechansim for canvas
                     io_output_panel.add(box);;
 
                     io_output_panel.setAlignmentX(Component.LEFT_ALIGNMENT);
                     io_output_panel.setLayout(new BoxLayout(io_output_panel, BoxLayout.Y_AXIS));
                     io_output_panel.setBackground(new java.awt.Color(255, 255, 255));
-                    // io_output_panel_scroll.getVerticalScrollBar().setUnitIncrement(30);
                     io_output_panel_scroll.setViewportView(io_output_panel);
+
+                    io_output_panel_scroll.getVerticalScrollBar().setValue(io_output_panel_scroll.getVerticalScrollBar().getValue());
+                    io_output_panel_scroll.getVerticalScrollBar().setUnitIncrement(30);
                     scroll_value = scroll_value + 30;
                     io_output_panel_scroll.getVerticalScrollBar().setValue(scroll_value);
                     
 
                     if(count >= staticResults.length){
-                        io_output_panel_scroll.getVerticalScrollBar().setValue(-10);
                         scroll_value = 0;
                         timer.stop();
                     }

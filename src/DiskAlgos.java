@@ -31,8 +31,7 @@ public static void setTotal_distance(int total_distance) {
     DiskAlgos.total_distance = total_distance;
 }
  
-static int[] FCFS(int arr[], int head)
-{
+static int[] FCFS(int arr[], int head) {
     int size = arr.length;
     int seek_count = 0;
     int distance, cur_track;
@@ -50,27 +49,16 @@ static int[] FCFS(int arr[], int head)
         // accessed track is now new head
         head = cur_track;
     }
- 
-    System.out.println("Total number of " +
-                       "seek operations = " +
-                        seek_count);
- 
     // Seek sequence would be the same
     // as request array sequence
-    System.out.println("Seek Sequence is");
- 
-    for (int i = 0; i < size; i++)
-    {
-        System.out.println(arr[i]);
-    }
+    
     sequence = arr.clone();
     setTotal_distance(seek_count);
     // seek = seek_count;
     return sequence;
 }
 
-// Calculates difference of each
-    // track number with the head position
+// Calculates difference of each track number with the head position
     public static void calculateDifference(int queue[],
                                         int head, Node diff[])
                                          
@@ -133,15 +121,6 @@ static int[] FCFS(int arr[], int head)
          
         // for last accessed track
         seek_sequence[seek_sequence.length - 1] = head;
-         
-        System.out.println("Total number of seek operations = "
-                                                     + seek_count);
-                                                      
-        System.out.println("Seek Sequence is");
-         
-        // print the sequence
-        for (int i = 0; i < seek_sequence.length; i++)
-            System.out.println(seek_sequence[i]);
 
         sequence = seek_sequence.clone();
 
@@ -227,208 +206,177 @@ static int[] SCAN(int arr[], int head, String direction)
         }
         setTotal_distance(seek_count);
     }
- 
-    System.out.print("Total number of seek operations = "
-                        + seek_count + "\n");
- 
-    System.out.print("Seek Sequence is" + "\n");
- 
-    for (int i = 0; i < seek_sequence.size(); i++)
-    {
-        System.out.print(seek_sequence.get(i) + "\n");
-    }
     sequence = seek_sequence.stream().mapToInt(i->i).toArray();
     seek = seek_count;
     return sequence;
-
 }
 
-public static int[] CSCAN(int arr[], int head)
-    {
-        int size = arr.length;
-        int seek_count = 0;
-        int distance, cur_track;
-  
-        Vector<Integer> left = new Vector<Integer>();
-        Vector<Integer> right = new Vector<Integer>();
-        Vector<Integer> seek_sequence
-            = new Vector<Integer>();
-  
-        // Appending end values which has
-        // to be visited before reversing
-        // the direction
-        left.add(0);
-        right.add(disk_size - 1);
-  
-        // Tracks on the left of the
-        // head will be serviced when
-        // once the head comes back
-        // to the beginning (left end).
-        for (int i = 0; i < size; i++) {
-            if (arr[i] < head)
-                left.add(arr[i]);
-            if (arr[i] > head)
-                right.add(arr[i]);
-        }
-  
-        // Sorting left and right vectors
-        Collections.sort(left);
-        Collections.sort(right);
-  
-        // First service the requests
-        // on the right side of the
-        // head.
-        for (int i = 0; i < right.size(); i++) {
-            cur_track = right.get(i);
-  
-            // Appending current track to seek sequence
-            seek_sequence.add(cur_track);
-  
-            // Calculate absolute distance
-            distance = Math.abs(cur_track - head);
-  
-            // Increase the total count
-            seek_count += distance;
-  
-            // Accessed track is now new head
-            head = cur_track;
-        }
-  
-        // Once reached the right end
-        // jump to the beginning.
-        head = 0;
-  
-        // adding seek count for head returning from 199 to
-        // 0
-        seek_count += (disk_size - 1);
-  
-        // Now service the requests again
-        // which are left.
-        for (int i = 0; i < left.size(); i++) {
-            cur_track = left.get(i);
-  
-            // Appending current track to
-            // seek sequence
-            seek_sequence.add(cur_track);
-  
-            // Calculate absolute distance
-            distance = Math.abs(cur_track - head);
-  
-            // Increase the total count
-            seek_count += distance;
-  
-            // Accessed track is now the new head
-            head = cur_track;
-        }
-  
-        System.out.println("Total number of seek "
-                           + "operations = " + seek_count);
-  
-        System.out.println("Seek Sequence is");
-  
-        for (int i = 0; i < seek_sequence.size(); i++) {
-            System.out.println(seek_sequence.get(i));
-        }
-        sequence = seek_sequence.stream().mapToInt(i->i).toArray();
-        setTotal_distance(seek_count);
-        seek = seek_count;
-        return sequence;
+public static int[] CSCAN(int arr[], int head) {
+    int size = arr.length;
+    int seek_count = 0;
+    int distance, cur_track;
+
+    Vector<Integer> left = new Vector<Integer>();
+    Vector<Integer> right = new Vector<Integer>();
+    Vector<Integer> seek_sequence
+        = new Vector<Integer>();
+
+    // Appending end values which has
+    // to be visited before reversing
+    // the direction
+    left.add(0);
+    right.add(disk_size - 1);
+
+    // Tracks on the left of the
+    // head will be serviced when
+    // once the head comes back
+    // to the beginning (left end).
+    for (int i = 0; i < size; i++) {
+        if (arr[i] < head)
+            left.add(arr[i]);
+        if (arr[i] > head)
+            right.add(arr[i]);
     }
 
-public static int[] LOOK(int arr[], int head, String direction)
-{
-int size = arr.length;
-int seek_count = 0;
-int distance, cur_track;
+    // Sorting left and right vectors
+    Collections.sort(left);
+    Collections.sort(right);
 
-Vector<Integer> left = new Vector<Integer>();
-Vector<Integer> right = new Vector<Integer>();
-Vector<Integer> seek_sequence = new Vector<Integer>();
+    // First service the requests
+    // on the right side of the
+    // head.
+    for (int i = 0; i < right.size(); i++) {
+        cur_track = right.get(i);
 
-// Appending values which are
-// currently at left and right
-// direction from the head.
-for(int i = 0; i < size; i++)
-{
-if (arr[i] < head)
-left.add(arr[i]);
-if (arr[i] > head)
-right.add(arr[i]);
-} 
+        // Appending current track to seek sequence
+        seek_sequence.add(cur_track);
 
-// Sorting left and right vectors
-// for servicing tracks in the
-// correct sequence.
-Collections.sort(left); 
-Collections.sort(right); 
+        // Calculate absolute distance
+        distance = Math.abs(cur_track - head);
 
-// Run the while loop two times.
-// one by one scanning right
-// and left side of the head
-int run = 2;
-while (run-- > 0)
-{
-if (direction == "left")
-{
-for(int i = left.size() - 1;
-i >= 0; i--)
-{
-cur_track = left.get(i);
+        // Increase the total count
+        seek_count += distance;
 
-// Appending current track to
-// seek sequence
-seek_sequence.add(cur_track);
+        // Accessed track is now new head
+        head = cur_track;
+    }
 
-// Calculate absolute distance
-distance = Math.abs(cur_track - head);
+    // Once reached the right end
+    // jump to the beginning.
+    head = 0;
 
-// Increase the total count
-seek_count += distance;
+    // adding seek count for head returning from 199 to
+    // 0
+    seek_count += (disk_size - 1);
 
-// Accessed track is now the new head
-head = cur_track;
+    // Now service the requests again
+    // which are left.
+    for (int i = 0; i < left.size(); i++) {
+        cur_track = left.get(i);
+
+        // Appending current track to
+        // seek sequence
+        seek_sequence.add(cur_track);
+
+        // Calculate absolute distance
+        distance = Math.abs(cur_track - head);
+
+        // Increase the total count
+        seek_count += distance;
+
+        // Accessed track is now the new head
+        head = cur_track;
+    }
+    sequence = seek_sequence.stream().mapToInt(i->i).toArray();
+    setTotal_distance(seek_count);
+    seek = seek_count;
+    return sequence;
 }
 
-// Reversing the direction
-direction = "right";
-}
-else if (direction == "right")
-{
-for(int i = 0; i < right.size(); i++)
-{
-cur_track = right.get(i);
+public static int[] LOOK(int arr[], int head, String direction) {
+    int size = arr.length;
+    int seek_count = 0;
+    int distance, cur_track;
 
-// Appending current track to
-// seek sequence
-seek_sequence.add(cur_track);
+    Vector<Integer> left = new Vector<Integer>();
+    Vector<Integer> right = new Vector<Integer>();
+    Vector<Integer> seek_sequence = new Vector<Integer>();
 
-// Calculate absolute distance
-distance = Math.abs(cur_track - head);
+    // Appending values which are
+    // currently at left and right
+    // direction from the head.
+    for(int i = 0; i < size; i++)
+    {
+    if (arr[i] < head)
+    left.add(arr[i]);
+    if (arr[i] > head)
+    right.add(arr[i]);
+    } 
 
-// Increase the total count
-seek_count += distance;
+    // Sorting left and right vectors
+    // for servicing tracks in the
+    // correct sequence.
+    Collections.sort(left); 
+    Collections.sort(right); 
 
-// Accessed track is now new head
-head = cur_track;
-}
+    // Run the while loop two times.
+    // one by one scanning right
+    // and left side of the head
+    int run = 2;
+    while (run-- > 0)
+    {
+    if (direction == "left")
+    {
+    for(int i = left.size() - 1;
+    i >= 0; i--)
+    {
+    cur_track = left.get(i);
 
-// Reversing the direction
-direction = "left";
-}
-}
+    // Appending current track to
+    // seek sequence
+    seek_sequence.add(cur_track);
 
-System.out.println("Total number of seek " +
-   "operations = " + seek_count);
+    // Calculate absolute distance
+    distance = Math.abs(cur_track - head);
 
-System.out.println("Seek Sequence is");
+    // Increase the total count
+    seek_count += distance;
 
-for(int i = 0; i < seek_sequence.size(); i++)
-{
-System.out.println(seek_sequence.get(i));
-}
-sequence = seek_sequence.stream().mapToInt(i->i).toArray();
-setTotal_distance(seek_count);
-return sequence;
+    // Accessed track is now the new head
+    head = cur_track;
+    }
+
+    // Reversing the direction
+    direction = "right";
+    }
+    else if (direction == "right")
+    {
+    for(int i = 0; i < right.size(); i++)
+    {
+    cur_track = right.get(i);
+
+    // Appending current track to
+    // seek sequence
+    seek_sequence.add(cur_track);
+
+    // Calculate absolute distance
+    distance = Math.abs(cur_track - head);
+
+    // Increase the total count
+    seek_count += distance;
+
+    // Accessed track is now new head
+    head = cur_track;
+    }
+
+    // Reversing the direction
+    direction = "left";
+    }
+    }
+
+    sequence = seek_sequence.stream().mapToInt(i->i).toArray();
+    setTotal_distance(seek_count);
+    return sequence;
 }
 
 public static int[] CLOOK(int arr[], int head)
@@ -508,11 +456,11 @@ public static int[] CLOOK(int arr[], int head)
     System.out.println("Total number of seek " +
                        "operations = " + seek_count);
    
-    System.out.println("Seek Sequence is");
+    
    
     for(int i = 0; i < seek_sequence.size(); i++)
     {
-        System.out.println(seek_sequence.get(i));
+        
     }
     sequence = seek_sequence.stream().mapToInt(i->i).toArray();
     setTotal_distance(seek_count);
@@ -527,25 +475,25 @@ public static void main(String[] args)
     // request array
     int arr[] = {82, 170, 43, 140, 24, 16, 190};
     int head = 50;
-    System.out.println("Head at :"+head);
+    
     String direction = "left";
     // add space
-    System.out.println("----FCFS----");
+    
     FCFS(arr, head);
     //add space
-    System.out.println("----SSTF----");
+    
     SSTF(arr, head);
     // add space
-    System.out.println("----SCAN-----");
+    
     SCAN(arr,head,direction);
     // add space
-    System.out.println("----CSCAN----");
+    
     CSCAN(arr, head);
     // add space
-    System.out.println("----LOOK----");
+    
     LOOK(arr, head, direction);
     // add space
-    System.out.println("----CLOOK----");
+    
     CLOOK(arr, head);
 }
 
