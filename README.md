@@ -16,7 +16,7 @@ This program is a Disk Scheduling Algorithm Simulator developed by 3 third-year 
 ### Jar File Execution
 1. For other OS with Java installed, type the following: `java -jar DiskSim.jar`
 
-### Exe File (Windows users only)
+### EXE File (Windows users only)
 1. Simply type the following: `start DiskSim.exe`
 
 ###
